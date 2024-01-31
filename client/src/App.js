@@ -2,7 +2,7 @@ import React from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./routes";
 import store from "./store/store";
-import {Provider} from 'react-redux'
+import { Provider } from "react-redux";
 
 // import React from 'react';
 
@@ -92,10 +92,9 @@ const LoginPage = () => {
 const App = () => {
   return (
     <>
-    <Provider store={store}>
-
-      <RouterProvider router={router} />
-    </Provider>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </>
   );
   // return <LoginPage />

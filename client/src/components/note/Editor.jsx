@@ -12,23 +12,23 @@ const Editor = ({ block }) => {
     },
   });
 
-  useEffect(() => {
-    if (!block) {
-      console.log("not", block);
-      return;
-    }
-    console.log("inserting", block);
+//   useEffect(() => {  
+//     if (!block) {
+//       console.log("not", block);
+//       return;
+//     }
+//     console.log("inserting", block);
 
-    editor.insertBlocks(
-      block,
-      //   editor.getTextCursorPosition().block,
-      "initialBlockId",
-      "after"
-    );
-  }, []);
+//     editor.insertBlocks(
+//       block,
+//       //   editor.getTextCursorPosition().block,
+//       "initialBlockId",
+//       "after"
+//     );
+//   }, []);
   return (
     <>
-      <BlockNoteView editor={editor} theme={"light"} />
+      <BlockNoteView editor={editor} theme={"dark"} />
       <pre> {JSON.stringify(blocks, null, 2)} </pre>
     </>
   );
