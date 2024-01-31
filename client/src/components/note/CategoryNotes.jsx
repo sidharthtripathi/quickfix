@@ -75,14 +75,25 @@ const CategoryNotes = ({}) => {
       children: [],
     },
   ];
+
+  const addNote = () => {
+    const noteName = window.prompt("Category name");
+
+    alert("added " + noteName);
+  };
   return (
     <div>
-      <h1>{category.category}</h1>
+      <div className={"flex mx-10"} style={{ justifyContent: "space-between" }}>
+        <h1>{category.category}</h1>
+        <button onClick={addNote}>
+          <strong>+</strong>
+        </button>
+      </div>
       {category.notes.map((topic) => (
         <div key={Math.random()}>
           <Link
             to={`/note/categories/${category.category}/${topic}`}
-            state={{ topic: topic , notes:notes}}
+            state={{ topic: topic, notes: notes }}
           >
             {topic}
           </Link>
