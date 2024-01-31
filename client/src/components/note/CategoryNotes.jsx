@@ -1,11 +1,14 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
+import { addNoteInfo } from "../../store/noteSlice";
 
 const CategoryNotes = ({}) => {
   // const {category} = useParams();
   const location = useLocation();
+  const dispatch = useDispatch();
   const { category } = location.state;
-  console.log(category);
+  //   console.log(category);
 
   const notes = [
     {
@@ -75,16 +78,34 @@ const CategoryNotes = ({}) => {
       children: [],
     },
   ];
+
+  const addNewNote = () => {
+    const noteTitle = window.prompt("Category name");
+    const noteInfo = {
+      categoryId: category.categoryId,
+      info: {
+        noteTitle: noteTitle,
+        noteId: Math.random(),
+        noteData: [],
+      },
+    };
+    dispatch(addNoteInfo(noteInfo));
+  };
   return (
     <div>
-      <h1>{category.category}</h1>
-      {category.notes.map((topic) => (
+      <div className={"flex mx-10"} style={{ justifyContent: "space-between" }}>
+        <h1>{category.categoryName}</h1>
+        <button onClick={addNewNote}>
+          <strong>+</strong>
+        </button>
+      </div>
+      {category.notes.map((note) => (
         <div key={Math.random()}>
           <Link
-            to={`/note/categories/${category.category}/${topic}`}
-            state={{ topic: topic , notes:notes}}
+            to={`/note/categories/${category.categoryName}/${note.noteTitle}`}
+            state={{ title: note.noteTitle, notes: notes }}
           >
-            {topic}
+            {note.noteTitle}
           </Link>
         </div>
       ))}
