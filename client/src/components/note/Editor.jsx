@@ -26,6 +26,7 @@ const Editor = ({ block }) => {
 //       "after"
 //     );
 //   }, []);
+
   return (
     <>
       <BlockNoteView editor={editor} theme={"dark"} />

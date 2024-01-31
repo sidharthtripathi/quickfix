@@ -4,31 +4,30 @@ import { NavLink, Outlet } from "react-router-dom";
 import { addCategory } from "../../store/noteSlice";
 
 const NoteCategories = () => {
-    const [categories, setCategories] = useState([
-        {
-          categoryId: "1",
-          categoryName: "Physics",
-          notes: [
-            {
-              noteId: "1",
-              noteTitle: "Thermodynamics",
-              contentBlocks: [], 
-            },
-            {
-              noteId: "2",
-              noteTitle: "Quantum Mechanics",
-              contentBlocks: [], 
-            },
-          ],
-        },
-        {
-          categoryId: "2",
-          categoryName: "Chemistry",
-          notes: [
-          ],
-        },
-      ]);
-      
+//   const [categories, setCategories] = useState([
+//     {
+//       categoryId: "1",
+//       categoryName: "Physics",
+//       notes: [
+//         {
+//           noteId: "1",
+//           noteTitle: "Thermodynamics",
+//           contentBlocks: [],
+//         },
+//         {
+//           noteId: "2",
+//           noteTitle: "Quantum Mechanics",
+//           contentBlocks: [],
+//         },
+//       ],
+//     },
+//     {
+//       categoryId: "2",
+//       categoryName: "Chemistry",
+//       notes: [],
+//     },
+//   ]);
+  const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
   const note = useSelector((state) => state.note.notes);
@@ -44,7 +43,7 @@ const NoteCategories = () => {
     }
 
     const newCategory = {
-      categoryId: categories.length + 1,
+      categoryId: categories.length,
       categoryName: categoryName,
       categoryNotes: [],
     };
@@ -70,15 +69,22 @@ const NoteCategories = () => {
           </button>
         </div>
         <div>
-          {categories.map((category) => (
-            <NavLink
-              to={`/note/categories/${category.categoryName}`}
-              state={{ category: category }}
-              key={category._id}
-            >
-              <h4>{category.categoryName}</h4>
-            </NavLink>
-          ))}
+          {categories &&
+            note.map((category) => (
+              <NavLink
+                to={`/note/categories/${category.categoryName}`}
+                state={{ category: category }}
+                key={category._id}
+              >
+                <h4
+                  className={
+                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500"
+                  }
+                >
+                  {category.categoryName}
+                </h4>
+              </NavLink>
+            ))}
         </div>
       </div>
 
