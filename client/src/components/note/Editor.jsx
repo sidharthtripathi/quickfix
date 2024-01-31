@@ -54,7 +54,7 @@ const Editor = ({ block }) => {
     }
     console.log("inserting", block);
 
-    // editor.insertBlocks(b,editor.topLevelBlocks, "before")
+    // editor.insertBlocks(b,editor.topLevelBlocks, "before")  
   }, []);
   return (
     <>
