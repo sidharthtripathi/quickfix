@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
+import { addCategory } from "../../store/noteSlice";
 
 const NoteCategories = () => {
   const [categories, setCategories] = useState([
@@ -17,6 +19,10 @@ const NoteCategories = () => {
     { _id: 4, category: "Biology", notes: ["Cell Biology", "Genetics"] },
   ]);
 
+  const dispatch = useDispatch();
+  const note = useSelector(state => state.note.categories)
+
+  console.log("selector ", note)
   const addCategoryHandler = () => {
     const category = window.prompt("Category name");
 
@@ -31,7 +37,9 @@ const NoteCategories = () => {
       category: category,
       notes: [],
     };
+
     setCategories((prevCategories) => [newCategory, ...prevCategories]);
+    dispatch(addCategory(newCategory));
     console.log("new category has been added", newCategory);
   };
 
