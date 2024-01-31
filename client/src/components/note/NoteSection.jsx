@@ -9,15 +9,15 @@ const NoteSection = () => {
         style={{
           background: "white",
           height: "100vh",
-          width: "20%",
+          width: "100%",
           border: "2px solid green",
         }}
       >
         <NoteCategories />
       </div>
-      <div style={{ width: "80%" }}>
+      {/* <div style={{ width: "80%" }}>
         <Editor />
-      </div>
+      </div> */}
     </div>
   );
 };

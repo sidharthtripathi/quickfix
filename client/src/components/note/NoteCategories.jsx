@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 
 const NoteCategories = () => {
   const [categories, setCategories] = useState([
@@ -16,15 +17,54 @@ const NoteCategories = () => {
     { _id: 4, category: "Biology", notes: ["Cell Biology", "Genetics"] },
   ]);
 
+  const addCategoryHandler = () => {
+    const category = window.prompt("Category name");
+
+    if (!category) return;
+    if (category.trim() === "") {
+      console.log("Emtpy");
+      return;
+    }
+
+    const newCategory = {
+      _id: categories.length + 1,
+      category: category,
+      notes: [],
+    };
+    setCategories((prevCategories) => [newCategory, ...prevCategories]);
+    console.log("new category has been added", newCategory);
+  };
+
   return (
-    <div>
-      <div>NoteCategories</div>
-      <div>
-        {categories.map((category) => (
-          <div key={category._id}>
-            <h4>{category.category}</h4>
-          </div>
-        ))}
+    <div style={{ display: "flex" }}>
+      <div style={{ width: "20%", border: "2px solid red", height: "100vh" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            margin: "1rem 0",
+          }}
+        >
+          <div>NoteCategories</div>
+          <button onClick={addCategoryHandler}>
+            <strong>+</strong>
+          </button>
+        </div>
+        <div>
+          {categories.map((category) => (
+            <NavLink
+              to={`/note/categories/${category.category}`}
+              state={{ category: category }}
+              key={category._id}
+            >
+              <h4>{category.category}</h4>
+            </NavLink>
+          ))}
+        </div>
+      </div>
+
+      <div style={{ width: "80%" }}>
+        <Outlet />
       </div>
     </div>
   );
