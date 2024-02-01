@@ -37,21 +37,29 @@ const noteSlice = createSlice({
       const { categoryId, info } = action.payload;
       //   console.log('add note info',action.payload);
       const categoryIdx = state.notes.findIndex((n) => {
-        console.log('n',n);
+        console.log("n", n);
         return n.categoryId === categoryId;
       });
 
-      if(!state.notes && categoryIdx === -1) return
-
-      
-      console.log("CATEGORYID", categoryId);
-      console.log("sssss", state.notes[categoryIdx]);
-      console.log("idx", categoryIdx);
-      console.log("state", JSON.stringify(state.notes));
-      state.notes[categoryIdx].categoryNotes.push(info)
+      if (!state.notes && categoryIdx === -1) return;
+      state.notes[categoryIdx].categoryNotes.push(info);
     },
+
+    addNote : (state, action) =>{
+      const {categoryId, noteId, note} = action.payload
+      const categoryIdx = state.notes.findIndex( n => n.categoryId === categoryId)
+
+      let categoryNoteIdx;
+      if(categoryIdx !== -1){
+         categoryNoteIdx = state.notes[categoryIdx].categoryNotes.findIndex( n => n.noteId === noteId)
+      }
+
+      console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
+      console.log("note",note)
+      state.notes[categoryIdx].categoryNotes[categoryNoteIdx].noteData =  note
+    }
   },
 });
 
-export const { addCategory, addNoteInfo } = noteSlice.actions;
+export const { addCategory, addNoteInfo,addNote } = noteSlice.actions;
 export default noteSlice.reducer;

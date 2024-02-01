@@ -118,7 +118,7 @@ const CategoryNotes = () => {
         >
           <Link
             to={`/note/categories/${category.categoryName}/${note.noteTitle}`}
-            state={{ title: note.noteTitle, block: note.noteData }}
+            state={{ title: note.noteTitle, categoryId : category.categoryId, noteId : note.noteId , block: note.noteData }}
           >
             <div className="text-white" key={Math.random()}>
               {note.noteTitle}
