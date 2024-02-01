@@ -4,29 +4,29 @@ import { NavLink, Outlet } from "react-router-dom";
 import { addCategory } from "../../store/noteSlice";
 
 const NoteCategories = () => {
-//   const [categories, setCategories] = useState([
-//     {
-//       categoryId: "1",
-//       categoryName: "Physics",
-//       notes: [
-//         {
-//           noteId: "1",
-//           noteTitle: "Thermodynamics",
-//           contentBlocks: [],
-//         },
-//         {
-//           noteId: "2",
-//           noteTitle: "Quantum Mechanics",
-//           contentBlocks: [],
-//         },
-//       ],
-//     },
-//     {
-//       categoryId: "2",
-//       categoryName: "Chemistry",
-//       notes: [],
-//     },
-//   ]);
+  //   const [categories, setCategories] = useState([
+  //     {
+  //       categoryId: "1",
+  //       categoryName: "Physics",
+  //       notes: [
+  //         {
+  //           noteId: "1",
+  //           noteTitle: "Thermodynamics",
+  //           contentBlocks: [],
+  //         },
+  //         {
+  //           noteId: "2",
+  //           noteTitle: "Quantum Mechanics",
+  //           contentBlocks: [],
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       categoryId: "2",
+  //       categoryName: "Chemistry",
+  //       notes: [],
+  //     },
+  //   ]);
   const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
@@ -78,7 +78,7 @@ const NoteCategories = () => {
               >
                 <h4
                   className={
-                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500"
+                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500 hover:bg-green-400"
                   }
                 >
                   {category.categoryName}
