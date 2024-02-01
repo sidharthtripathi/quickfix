@@ -10,8 +10,9 @@ const NoteEditorSection = () => {
     
   return (
     <div style={{width:'100%', height:"100%"}}>
-        <h5>{data?.topic}</h5>
-        <Editor block={data.notes} />
+        <h5>{data?.title}</h5>
+        {/* <Editor block={data.block} /> */}
+        <Editor />
     </div>
   )
 }

@@ -74,7 +74,7 @@ const NoteCategories = () => {
               <NavLink
                 to={`/note/categories/${category.categoryName}`}
                 state={{ category: category }}
-                key={category._id}
+                key={category.categoryId}
               >
                 <h4
                   className={
