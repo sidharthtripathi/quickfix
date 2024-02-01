@@ -78,7 +78,7 @@ const NoteCategories = () => {
               >
                 <h4
                   className={
-                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500"
+                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500 hover:bg-green-400"
                   }
                 >
                   {category.categoryName}
