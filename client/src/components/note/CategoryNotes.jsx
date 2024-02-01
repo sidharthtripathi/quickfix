@@ -7,8 +7,8 @@ const CategoryNotes = ({}) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-//   const [isAdding, setIsAdding] = useState(false);
-//   const [noteTitle, setoteTitle] = useState("");
+  //   const [isAdding, setIsAdding] = useState(false);
+  //   const [noteTitle, setoteTitle] = useState("");
   const { category } = location.state;
 
   const cat = useSelector((state) => {
