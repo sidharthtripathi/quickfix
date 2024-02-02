@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema({
         required: true,
         max: 50,
         unique: true,
+    },
+    resetlink:{
+      type:String,
+      default:" "  
     }
 
 });
