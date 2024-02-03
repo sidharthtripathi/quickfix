@@ -58,6 +58,7 @@ const Login = () => {
           <div>
             <input
               placeholder="Email"
+             // className=" p-3 w-[32rem] h-[4rem] text-grey border border-[#3ebca3ae] bg-[#ECF5F3] rounded-3xl text-[20px] text-normal"
               className=" p-3 w-[32rem] h-[4rem] bg-[#000000] rounded-3xl text-[20px] text-normal" value={email} onChange={handleInputChangeEmail}
             ></input>
           </div>
