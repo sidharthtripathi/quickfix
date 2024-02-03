@@ -1,37 +1,55 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
+import { addCategory } from "../../store/noteSlice";
 
 const NoteCategories = () => {
-  const [categories, setCategories] = useState([
-    {
-      _id: 1,
-      category: "Physics",
-      notes: ["Thermodynamics", "Quantum Mechanics"],
-    },
-    {
-      _id: 2,
-      category: "Chemistry",
-      notes: ["Organic Chemistry", "Periodic Table"],
-    },
-    { _id: 3, category: "Mathematics", notes: ["Calculus", "Algebra"] },
-    { _id: 4, category: "Biology", notes: ["Cell Biology", "Genetics"] },
-  ]);
+  //   const [categories, setCategories] = useState([
+  //     {
+  //       categoryId: "1",
+  //       categoryName: "Physics",
+  //       notes: [
+  //         {
+  //           noteId: "1",
+  //           noteTitle: "Thermodynamics",
+  //           contentBlocks: [],
+  //         },
+  //         {
+  //           noteId: "2",
+  //           noteTitle: "Quantum Mechanics",
+  //           contentBlocks: [],
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       categoryId: "2",
+  //       categoryName: "Chemistry",
+  //       notes: [],
+  //     },
+  //   ]);
+  const [categories, setCategories] = useState([]);
 
+  const dispatch = useDispatch();
+  const note = useSelector((state) => state.note.notes);
+
+  console.log("selector ", note);
   const addCategoryHandler = () => {
-    const category = window.prompt("Category name");
+    const categoryName = window.prompt("Category name");
 
-    if (!category) return;
-    if (category.trim() === "") {
+    if (!categoryName) return;
+    if (categoryName.trim() === "") {
       console.log("Emtpy");
       return;
     }
 
     const newCategory = {
-      _id: categories.length + 1,
-      category: category,
-      notes: [],
+      categoryId: categories.length,
+      categoryName: categoryName,
+      categoryNotes: [],
     };
+
     setCategories((prevCategories) => [newCategory, ...prevCategories]);
+    dispatch(addCategory(newCategory));
     console.log("new category has been added", newCategory);
   };
 
@@ -51,15 +69,22 @@ const NoteCategories = () => {
           </button>
         </div>
         <div>
-          {categories.map((category) => (
-            <NavLink
-              to={`/note/categories/${category.category}`}
-              state={{ category: category }}
-              key={category._id}
-            >
-              <h4>{category.category}</h4>
-            </NavLink>
-          ))}
+          {categories &&
+            note.map((category) => (
+              <NavLink
+                to={`/note/categories/${category.categoryName}`}
+                state={{ category: category }}
+                key={category.categoryId}
+              >
+                <h4
+                  className={
+                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500 hover:bg-green-400"
+                  }
+                >
+                  {category.categoryName}
+                </h4>
+              </NavLink>
+            ))}
         </div>
       </div>
 
