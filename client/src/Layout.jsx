@@ -13,10 +13,14 @@ const Layout = () => {
           style={{ width: "10vw", border: "2px solid black", height: "90vh" }}
         >
           <div style={{ border: "2px solid black", padding: "1rem" }}>
-            <NavLink to="/chat">Chat</NavLink>
+            <NavLink to="/chat">
+              <span className="material-symbols-outlined">chat</span>
+            </NavLink>
           </div>
           <div style={{ border: "2px solid black", padding: "1rem" }}>
-            <NavLink to="/note">Notes</NavLink>
+            <NavLink to="/note">
+              <span className="material-symbols-outlined">note_alt</span>
+            </NavLink>
           </div>
         </div>
         <div style={{ border: "3px solid red", width: "88vw" }}>
