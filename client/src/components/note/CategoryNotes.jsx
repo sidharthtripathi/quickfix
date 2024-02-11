@@ -100,32 +100,29 @@ const CategoryNotes = () => {
     dispatch(addNoteInfo(noteInfo));
   };
   return (
-    <div>
-      <div className="flex mx-10 justify-between items-center bg-teal-500 p-4">
-        <h1 className="text-white">{category.categoryName}</h1>
+    <div className="mx-10 my-4">
+      <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
+        <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1>
         <button
           onClick={addNewNote}
-          className="bg-white text-teal-500 rounded-full p-2"
+          className="bg-white text-teal-500 rounded-full p-2 hover:bg-teal-100 transition duration-150"
         >
           <strong>+</strong>
         </button>
       </div>
 
-      {cat?.categoryNotes?.map((note) => (
-        <div
-          key={note.noteId}
-          className="h-10 my-3 mx-2 rounded px-4 pt-1 bg-teal-500 hover:bg-teal-400"
-        >
+      <div className="mt-4">
+        {cat?.categoryNotes?.map((note) => (
           <Link
+            key={note.noteId}
             to={`/note/categories/${category.categoryName}/${note.noteTitle}`}
-            state={{ title: note.noteTitle, categoryId : category.categoryId, noteId : note.noteId , block: note.noteData }}
+            state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
+            className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
           >
-            <div className="text-white" key={Math.random()}>
-              {note.noteTitle}
-            </div>
+            <div className="text-white font-medium">{note.noteTitle}</div>
           </Link>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

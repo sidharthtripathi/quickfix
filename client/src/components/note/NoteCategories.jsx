@@ -41,7 +41,7 @@ const NoteCategories = () => {
       console.log("Emtpy");
       return;
     }
-console.log('categories.length', categories.length,)
+    console.log('categories.length', categories.length,)
     const newCategory = {
       categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
@@ -52,47 +52,38 @@ console.log('categories.length', categories.length,)
     dispatch(addCategory(newCategory));
     console.log("new category has been added", newCategory);
   };
-
   return (
-    <div style={{ display: "flex" }}>
-      <div style={{ width: "20%", border: "2px solid red", height: "100vh" }}>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            margin: "1rem 0",
-          }}
-        >
-          <div>NoteCategories</div>
-          <button onClick={addCategoryHandler}>
-            <strong>+</strong>
+    <div className="flex w-full border-2 ">
+      <div className="w-1/4 h-screen p-4 border-r-2 shadow-lg">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold text-gray-800">Categories</h2>
+          <button
+            onClick={addCategoryHandler}
+            className="inline-flex items-center justify-center p-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-full hover:from-green-600 hover:to-green-700 transition duration-150"
+          >
+            <span className="text-xl">+</span>
           </button>
         </div>
-        <div>
-          {categories &&
-            note.map((category) => (
-              <NavLink
-                to={`/note/categories/${category.categoryName}`}
-                state={{ category: category }}
-                key={category.categoryId}
-              >
-                <h4
-                  className={
-                    "h-10 my-3 text-white mx-2 rounded px-4 pt-1 bg-green-500 hover:bg-green-400"
-                  }
-                >
-                  {category.categoryName}
-                </h4>
-              </NavLink>
-            ))}
+        <div className="overflow-y-auto pr-2">
+          {categories && categories.map((category) => (
+            <NavLink
+              to={`/note/categories/${category.categoryName}`}
+              state={{ category }}
+              key={category.categoryId}
+              className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"
+            >
+              {category.categoryName}
+            </NavLink>
+          ))}
         </div>
       </div>
-
-      <div style={{ width: "80%" }}>
+      <div className="flex-grow p-4 bg-gray-50">
         <Outlet />
       </div>
     </div>
   );
 };
+
+
 
 export default NoteCategories;
