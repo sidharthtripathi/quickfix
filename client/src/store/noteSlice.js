@@ -37,7 +37,6 @@ const noteSlice = createSlice({
       const { categoryId, info } = action.payload;
       //   console.log('add note info',action.payload);
       const categoryIdx = state.notes.findIndex((n) => {
-        console.log("n", n);
         return n.categoryId === categoryId;
       });
 
@@ -54,8 +53,8 @@ const noteSlice = createSlice({
          categoryNoteIdx = state.notes[categoryIdx].categoryNotes.findIndex( n => n.noteId === noteId)
       }
 
-      console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
-      console.log("note",note)
+      // console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
+      // console.log("note",note)
       state.notes[categoryIdx].categoryNotes[categoryNoteIdx].noteData =  note
     }
   },

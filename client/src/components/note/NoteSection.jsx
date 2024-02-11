@@ -15,9 +15,6 @@ const NoteSection = () => {
       >
         <NoteCategories />
       </div>
-      {/* <div style={{ width: "80%" }}>
-        <Editor />
-      </div> */}
     </div>
   );
 };

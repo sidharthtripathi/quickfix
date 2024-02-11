@@ -41,9 +41,9 @@ const NoteCategories = () => {
       console.log("Emtpy");
       return;
     }
-
+console.log('categories.length', categories.length,)
     const newCategory = {
-      categoryId: categories.length,
+      categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
       categoryNotes: [],
     };
