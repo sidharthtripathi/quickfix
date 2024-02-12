@@ -33,7 +33,13 @@ const NoteCategories = () => {
   const dispatch = useDispatch();
   const note = useSelector((state) => state.note.notes);
 
-  console.log("selector ", note);
+  // const useEffect(()=>{
+
+  //   const response = await axios.get('http://localhost:1200/note/notes')
+  //   console.log('response', response)
+  // },[])
+
+  // console.log("selector ", note);
   const addCategoryHandler = async () => {
     const categoryName = window.prompt("Category name");
 
