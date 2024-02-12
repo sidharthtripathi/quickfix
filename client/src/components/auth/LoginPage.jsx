@@ -4,9 +4,23 @@ const Login = () => {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   
+  const URL="http://localhost:1200/login";
+  const handleSubmit = async(values,onSubmitProps) => {
+    
+    
+    const loginInResponse=await fetch(`${URL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    console.log(loginInResponse.json());
+    if(loginInResponse){
+      alert("Successful");
+    }
 
-  const handleSubmit = () => {
-    console.log(email, password);
+    console.log(values);
+
+    
   }
 
   const handleInputChangePassword=(e)=>{
@@ -14,13 +28,13 @@ const Login = () => {
   }
 
   const handleInputChangeEmail=(e)=>{
-  console.log(e.target.value);
+  // console.log(e.target.value);
   setEmail(e.target.value);
   }
   return (
 
      <>
-       <form onSubmit={handleSubmit}> 
+       
     <div className=" flex ">
       <div className="min-w-[938px] h-screen bg-white grid place-content-center ">
         <div className=" text-[3rem] font-bold text-center">
@@ -76,7 +90,7 @@ const Login = () => {
         </div>
 
         <div className="flex justify-center mt-6 ">
-          <button type="submit"  className=" hover:bg-[#3ebca3ae] w-[322px] h-[77px] text-center rounded-[30px] bg-[#28B498] text-white text-[32px] text-normal">
+          <button onClick={handleSubmit}   className=" hover:bg-[#3ebca3ae] w-[322px] h-[77px] text-center rounded-[30px] bg-[#28B498] text-white text-[32px] text-normal">
             Sign In
           </button>
         </div>
@@ -99,7 +113,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-    </form>
+   
     </>
   );
 };
