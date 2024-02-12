@@ -53,9 +53,18 @@ const Editor = () => {
     );
   }, []);
 
+  const saveNoteHandler = () =>{
+    
+    alert("you'r note has been saved")
+    console.log(blocks)
+  }
+
   return (
     <>
-      <BlockNoteView editor={editor} theme={"red"}></BlockNoteView>
+    <div>
+      <button onClick={saveNoteHandler} className="m-3 p-2 border rounded bg-green-500 text-white">save note</button>
+      <BlockNoteView editor={editor} theme={"dark"}></BlockNoteView>
+    </div>
     </>
   );
 };

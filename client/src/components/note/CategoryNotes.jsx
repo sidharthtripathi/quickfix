@@ -95,8 +95,8 @@ const CategoryNotes = () => {
       info: {
         noteTitle: noteTitle,
         noteId: Math.random(),
-        // noteData: [],
-        noteData: noteData,
+        noteData: [],
+        // noteData: noteData,
       },
     };
     try{
