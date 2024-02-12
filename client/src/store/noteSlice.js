@@ -26,6 +26,12 @@ const noteSlice = createSlice({
   },
 
   reducers: {
+    addingTheFetchedDataToStore: (state, action) => {
+      console.log("adding notes data", action.payload);
+
+      state.notes = action.payload;
+    },
+
     addCategory: (state, action) => {
       console.log("adding", action.payload);
 
@@ -44,21 +50,25 @@ const noteSlice = createSlice({
       state.notes[categoryIdx].categoryNotes.push(info);
     },
 
-    addNote : (state, action) =>{
-      const {categoryId, noteId, note} = action.payload
-      const categoryIdx = state.notes.findIndex( n => n.categoryId === categoryId)
+    addNote: (state, action) => {
+      const { categoryId, noteId, note } = action.payload;
+      const categoryIdx = state.notes.findIndex(
+        (n) => n.categoryId === categoryId
+      );
 
       let categoryNoteIdx;
-      if(categoryIdx !== -1){
-         categoryNoteIdx = state.notes[categoryIdx].categoryNotes.findIndex( n => n.noteId === noteId)
+      if (categoryIdx !== -1) {
+        categoryNoteIdx = state.notes[categoryIdx].categoryNotes.findIndex(
+          (n) => n.noteId === noteId
+        );
       }
 
       // console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
       // console.log("note",note)
-      state.notes[categoryIdx].categoryNotes[categoryNoteIdx].noteData =  note
-    }
+      state.notes[categoryIdx].categoryNotes[categoryNoteIdx].noteData = note;
+    },
   },
 });
 
-export const { addCategory, addNoteInfo,addNote } = noteSlice.actions;
+export const { addCategory, addNoteInfo, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
 export default noteSlice.reducer;

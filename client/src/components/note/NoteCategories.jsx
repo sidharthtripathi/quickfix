@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
-import { addCategory } from "../../store/noteSlice";
+import { addCategory, addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
+import useFetch from "../../hooks/useFetch";
 
 const NoteCategories = () => {
   //   const [categories, setCategories] = useState([
@@ -33,11 +34,16 @@ const NoteCategories = () => {
   const dispatch = useDispatch();
   const note = useSelector((state) => state.note.notes);
 
-  // const useEffect(()=>{
+  const dataState = useFetch("/note/notes")
 
-  //   const response = await axios.get('http://localhost:1200/note/notes')
-  //   console.log('response', response)
-  // },[])
+  useEffect(() => {
+    if (!dataState.data) {
+      return console.log('data not fetched yet')
+    }
+    console.log("Fetched data", dataState.data.data.data)
+    setCategories(dataState.data.data.data)
+    dispatch(addingTheFetchedDataToStore(dataState.data.data.data))
+  }, [dataState?.isLoading])
 
   // console.log("selector ", note);
   const addCategoryHandler = async () => {

@@ -14,9 +14,9 @@ const useFetch = (endpoint) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API}/note/notes`);
-        console.log("response", response);
-        if (response.data.data.success) {
+        const response = await axios.get(API + endpoint);
+        console.log("response.data.success", response.data);
+        if (response.data.success) {
           setDataState({
             data: response,
             isLoading: false,
