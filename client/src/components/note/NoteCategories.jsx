@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import { addCategory } from "../../store/noteSlice";
+import axios from "axios";
 
 const NoteCategories = () => {
   //   const [categories, setCategories] = useState([
@@ -33,7 +34,7 @@ const NoteCategories = () => {
   const note = useSelector((state) => state.note.notes);
 
   console.log("selector ", note);
-  const addCategoryHandler = () => {
+  const addCategoryHandler = async () => {
     const categoryName = window.prompt("Category name");
 
     if (!categoryName) return;
@@ -48,12 +49,24 @@ const NoteCategories = () => {
       categoryNotes: [],
     };
 
-    setCategories((prevCategories) => [newCategory, ...prevCategories]);
-    dispatch(addCategory(newCategory));
-    console.log("new category has been added", newCategory);
+    try {
+
+      const response = await axios.post('http://localhost:1200/note/create-category', newCategory)
+      console.log('response', response)
+      console.log('response')
+
+      setCategories((prevCategories) => [newCategory, ...prevCategories]);
+      dispatch(addCategory(newCategory));
+      console.log("new category has been added", newCategory);
+    } catch (e) { console.log(e) }
+
   };
   return (
     <div className="flex w-full border-2 ">
+      {/* {
+      JSON.stringify(note, 2, null)
+    } */}
+
       <div className="w-1/4 h-screen p-4 border-r-2 shadow-lg">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-800">Categories</h2>

@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { addNoteInfo } from "../../store/noteSlice";
+import axios from "axios";
 
 const CategoryNotes = () => {
   const location = useLocation();
@@ -12,7 +13,7 @@ const CategoryNotes = () => {
     return state.note.notes.find((n) => n.categoryId === category.categoryId);
   });
 
-  const addNewNote = () => {
+  const addNewNote = async() => {
     const noteTitle = window.prompt("Category name");
 
     if (!noteTitle) return;
@@ -89,6 +90,7 @@ const CategoryNotes = () => {
     ];
 
     const noteInfo = {
+      // _id : '65c8ccc016e553a5b61cc1c3',
       categoryId: category.categoryId,
       info: {
         noteTitle: noteTitle,
@@ -97,7 +99,15 @@ const CategoryNotes = () => {
         noteData: noteData,
       },
     };
-    dispatch(addNoteInfo(noteInfo));
+    try{
+
+      
+      const response = await axios.patch('http://localhost:1200/note/create-category-note', noteInfo)
+      console.log('response', response)
+      dispatch(addNoteInfo(noteInfo));
+    }catch(e){
+      console.log(e)
+    }
   };
   return (
     <div className="mx-10 my-4">
