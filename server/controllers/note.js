@@ -9,7 +9,11 @@ exports.getNotes = async (req, res) => {
     });
   }
 
-  res.status(200).json({ message: "Notes Fetched Successfully",success: true, data: notes });
+  res.status(200).json({
+    message: "Notes Fetched Successfully",
+    success: true,
+    data: notes,
+  });
 };
 exports.createCategory = async (req, res) => {
   const note = new Note(req.body);
@@ -24,10 +28,60 @@ exports.createCategoryNote = async (req, res) => {
 
   if (!note) {
     console.log("cattegory not found");
-    res.status(404).json({ message: "category not found.", success: false });
+    return res
+      .status(404)
+      .json({ message: "category not found.", success: false });
   }
   console.log("notes", note);
   note.categoryNotes.push(info);
   const response = await note.save();
   res.status(200).json({ message: "...", success: true, data: response });
 };
+
+// exports.postNote = async (req, res) => {
+//   const { categoryId, noteId, noteData } = req.body;
+//   const categories = await Note.findOne({ categoryId: categoryId });
+
+//   const noteIdx = categories.categoryNotes.findIndex(
+//     (c) => c.noteId === noteId
+//   );
+
+//   if (!categories.categoryNotes[noteIdx]) {
+//     console.log("cattegory not found");
+//     return res
+//       .status(404)
+//       .json({ message: "category not found.", success: false });
+//   }
+//   categories.categoryNotes[noteIdx].noteData = noteData;
+//   const response = await categories.save();
+//   res.status(200).json({ message: "...", success: true, data: response });
+// };
+
+exports.postNote = async (req, res) => {
+    try {
+      const { categoryId, noteId, noteData } = req.body;
+  
+      // Validate input parameters
+      if (!categoryId || !noteId || !noteData) {
+        return res.status(400).json({ message: "Invalid input data", success: false });
+      }
+  
+      // Update the note directly in the database
+      const updatedNote = await Note.findOneAndUpdate(
+        { categoryId: categoryId, "categoryNotes.noteId": noteId },
+        { $set: { "categoryNotes.$.noteData": noteData } },
+        { new: true }
+      );
+  
+      if (!updatedNote) {
+        return res.status(404).json({ message: "Category or note not found", success: false });
+      }
+  
+      // Return success response
+      res.status(200).json({ message: "Note updated successfully", success: true, data: updatedNote });
+    } catch (error) {
+      console.error("Error updating note:", error);
+      res.status(500).json({ message: "Internal server error", success: false });
+    }
+  };
+  

@@ -32,7 +32,6 @@ const NoteCategories = () => {
   const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
-  const note = useSelector((state) => state.note.notes);
 
   const dataState = useFetch("/note/notes")
 
@@ -40,12 +39,10 @@ const NoteCategories = () => {
     if (!dataState.data) {
       return console.log('data not fetched yet')
     }
-    console.log("Fetched data", dataState.data.data.data)
     setCategories(dataState.data.data.data)
     dispatch(addingTheFetchedDataToStore(dataState.data.data.data))
   }, [dataState?.isLoading])
 
-  // console.log("selector ", note);
   const addCategoryHandler = async () => {
     const categoryName = window.prompt("Category name");
 
@@ -54,7 +51,6 @@ const NoteCategories = () => {
       console.log("Emtpy");
       return;
     }
-    console.log('categories.length', categories.length,)
     const newCategory = {
       categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
@@ -75,9 +71,6 @@ const NoteCategories = () => {
   };
   return (
     <div className="flex w-full border-2 ">
-      {/* {
-      JSON.stringify(note, 2, null)
-    } */}
 
       <div className="w-1/4 h-screen p-4 border-r-2 shadow-lg">
         <div className="flex justify-between items-center mb-6">
