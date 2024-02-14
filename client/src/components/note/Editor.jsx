@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { BlockNoteView, useBlockNote } from "@blocknote/react";
+import { BlockNoteView, useBlockNote, getDefaultReactSlashMenuItems,
+  ReactSlashMenuItem, } from "@blocknote/react";
+import {
+  uploadToTmpFilesDotOrg_DEV_ONLY,
+} from "@blocknote/core";
+
 import "@blocknote/react/style.css";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,6 +15,9 @@ const Editor = () => {
   const [blocks, setBlocks] = useState(null);
   const location = useLocation();
   const dispatch = useDispatch();
+  const newSlashMenuItems =
+    getDefaultReactSlashMenuItems();
+
   const data = location?.state;
 
   let block;
@@ -26,12 +34,14 @@ const Editor = () => {
       })
     );
 
-    console.log('in effect')
   }, []);
 
   const editor = useBlockNote({
+    // using this to add file uploader
+    uploadFile: uploadToTmpFilesDotOrg_DEV_ONLY,
+
+    slashMenuItems: newSlashMenuItems,
     onEditorContentChange: (editor) => {
-      console.log('inside oneditcontetn change ')
       setBlocks(editor?.topLevelBlocks);
 
       dispatch(
@@ -44,13 +54,9 @@ const Editor = () => {
     },
   });
   useEffect(() => {
-    console.log('-------------------------------------', editor)
     if (!block) {
-      console.log("not", block);
       return;
     }
-
-    console.log('block ', block)
 
     editor.insertBlocks(
       block,
@@ -63,18 +69,15 @@ const Editor = () => {
   const saveNoteHandler = async () => {
 
 
-    alert("you'r note has been saved")
+    alert("your note has been saved")
 
     const dataToPost = {
       categoryId: data.categoryId,
       noteId: data.noteId,
-      noteData : blocks
+      noteData: blocks
     }
 
-    const response = await axios.post('http://localhost:1200/note/add-note',dataToPost)
-    console.log(response.data)
-
-    console.log(blocks)
+    const response = await axios.post('http://localhost:1200/note/add-note', dataToPost)
   }
 
   return (
@@ -82,7 +85,6 @@ const Editor = () => {
       <div>
         <button onClick={saveNoteHandler} className="m-3 p-2 border rounded bg-green-500 text-white">save note</button>
         <BlockNoteView editor={editor} theme={"light"}></BlockNoteView>
-        <pre>{JSON.stringify(blocks, null, 2)}</pre>
       </div>
     </>
   );
