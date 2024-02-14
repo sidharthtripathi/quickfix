@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { BlockNoteView, useBlockNote, getDefaultReactSlashMenuItems,
-  ReactSlashMenuItem, } from "@blocknote/react";
-import {
-  uploadToTmpFilesDotOrg_DEV_ONLY,
-} from "@blocknote/core";
-
+import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addNote } from "../../store/noteSlice";
 import axios from "axios";
+import { uploadToTmpFilesDotOrg_DEV_ONLY } from "@blocknote/core";
 
 const Editor = () => {
   const [blocks, setBlocks] = useState(null);
   const location = useLocation();
   const dispatch = useDispatch();
-  const newSlashMenuItems =
-    getDefaultReactSlashMenuItems();
-
   const data = location?.state;
 
   let block;
@@ -39,8 +32,7 @@ const Editor = () => {
   const editor = useBlockNote({
     // using this to add file uploader
     uploadFile: uploadToTmpFilesDotOrg_DEV_ONLY,
-
-    slashMenuItems: newSlashMenuItems,
+    
     onEditorContentChange: (editor) => {
       setBlocks(editor?.topLevelBlocks);
 
