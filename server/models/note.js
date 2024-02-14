@@ -32,9 +32,9 @@ const noteSchema = new mongoose.Schema({
     {
       noteTitle: String,
       noteId: Number,
-      noteData: [],
+      noteData: [], 
     },
   ],
-});
+},{ minimize: false });
 
 module.exports = mongoose.model("Note", noteSchema);

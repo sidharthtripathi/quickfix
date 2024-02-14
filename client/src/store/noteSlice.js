@@ -51,7 +51,7 @@ const noteSlice = createSlice({
     },
 
     addNote: (state, action) => {
-      const { categoryId, noteId, note } = action.payload;
+      const { categoryId, noteId, note } = action.payload;  
       const categoryIdx = state.notes.findIndex(
         (n) => n.categoryId === categoryId
       );
