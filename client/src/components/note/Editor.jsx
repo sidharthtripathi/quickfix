@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
 import { useLocation, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNote } from "../../store/noteSlice";
 import axios from "axios";
 import { uploadToTmpFilesDotOrg_DEV_ONLY } from "@blocknote/core";
@@ -12,23 +12,33 @@ const Editor = () => {
   const [blocks, setBlocks] = useState(null);
   const location = useLocation();
   const dispatch = useDispatch();
-  const data = location.state || {};
+  // const data = location.state || {};
 
-  const params = useParams();
-  console.log('params editor',params)
+  const {category :categoryParam, topic : topicParam} = useParams();
+  // console.log('params editor',params)
   let block;
   if (location.state && location.state.block) {
     block = location.state.block;
   }
+  const categoryId = categoryParam.split('-')[1]
+  const noteId = topicParam.split('-')[1]
+  // console.log(categoryId + "----" + noteId)
+  const categoryObj = useSelector((state) => {
+    return state.note.notes.find((n) => (n._id === categoryId ));
+  }) || {};
 
+  const topicObj = categoryObj.categoryNotes?.find(n=> n._id === noteId)
+
+  // console.log('category filtered note' ,categoryObj)
+  // console.log('topicObj filtered note' ,topicObj)
   useEffect(() => {
    
-    if(!data) return  console.log('data....',data)
+    if(!categoryObj) return  console.log('data....',categoryObj)
     dispatch(
       addNote({
-        categoryId: data.categoryId,
-        noteId: data.noteId,
-        note: data.block,
+        categoryId: categoryObj.categoryId,
+        noteId: topicObj.noteId,
+        note: topicObj.noteData,
       })
     );
     // console.log('data after....',data)
@@ -42,23 +52,26 @@ const Editor = () => {
 
       setBlocks(editor?.topLevelBlocks);
 
-      if(!data) return
+      // if(!cate) return
       dispatch(
         addNote({
-          categoryId: data.categoryId,
-          noteId: data.noteId,
+          // categoryId: data.categoryId,
+          // noteId: data.noteId,
+          categoryId: categoryObj.categoryId,
+        noteId: topicObj.noteId,
           note: editor.topLevelBlocks,
         })
       );
     },
   });
   useEffect(() => {
-    if (!block || !data) {
+    if (!topicObj?.noteData) {
       return;
     }
 
     editor.insertBlocks(
-      block,
+      // block,
+      topicObj.noteData,
       //   editor.getTextCursorPosition().block,
       "initialBlockId",
       "after"
@@ -71,8 +84,10 @@ const Editor = () => {
     alert("your note has been saved")
 
     const dataToPost = {
-      categoryId: data.categoryId,
-      noteId: data.noteId,
+      // categoryId: data.categoryId,
+      // noteId: data.noteId,
+      categoryId: categoryObj.categoryId,
+        noteId: topicObj.noteId,
       noteData: blocks
     }
 
