@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { addNoteInfo } from "../../store/noteSlice";
 import axios from "axios";
+import { API } from "../../utils/api";
 
 const CategoryNotes = () => {
   const location = useLocation();
@@ -102,7 +103,7 @@ const CategoryNotes = () => {
     try{
 
       
-      const response = await axios.patch('http://localhost:1200/note/create-category-note', noteInfo)
+      const response = await axios.patch(API + '/note/create-category-note', noteInfo)
       console.log('response', response)
       dispatch(addNoteInfo(noteInfo));
     }catch(e){

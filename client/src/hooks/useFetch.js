@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { API } from "../utils/api";
 
-const API = "http://localhost:1200";
+
 
 const useFetch = (endpoint) => {
   const [dataState, setDataState] = useState({
@@ -14,7 +15,7 @@ const useFetch = (endpoint) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(API + endpoint);
+        const response = await axios.get(API+ endpoint);
         console.log("response.data.success", response.data);
         if (response.data.success) {
           setDataState({

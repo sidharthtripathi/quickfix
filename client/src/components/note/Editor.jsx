@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { addNote } from "../../store/noteSlice";
 import axios from "axios";
 import { uploadToTmpFilesDotOrg_DEV_ONLY } from "@blocknote/core";
+import { API } from "../../utils/api";
 
 const Editor = () => {
   const [blocks, setBlocks] = useState(null);
@@ -32,7 +33,7 @@ const Editor = () => {
   const editor = useBlockNote({
     // using this to add file uploader
     uploadFile: uploadToTmpFilesDotOrg_DEV_ONLY,
-    
+
     onEditorContentChange: (editor) => {
       setBlocks(editor?.topLevelBlocks);
 
@@ -69,7 +70,7 @@ const Editor = () => {
       noteData: blocks
     }
 
-    const response = await axios.post('http://localhost:1200/note/add-note', dataToPost)
+    const response = await axios.post(API + '/note/add-note', dataToPost)
   }
 
   return (

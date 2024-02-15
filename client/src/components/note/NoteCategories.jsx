@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import { addCategory, addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
+import { API } from "../../utils/api";
 
 const NoteCategories = () => {
   //   const [categories, setCategories] = useState([
@@ -59,14 +60,13 @@ const NoteCategories = () => {
 
     try {
 
-      const response = await axios.post('http://localhost:1200/note/create-category', newCategory)
-      console.log('response', response)
-      console.log('response')
+      await axios.post(API + '/note/create-category', newCategory)
 
       setCategories((prevCategories) => [newCategory, ...prevCategories]);
       dispatch(addCategory(newCategory));
-      console.log("new category has been added", newCategory);
-    } catch (e) { console.log(e) }
+    } catch (e) {
+      console.log(e)
+    }
 
   };
   return (
