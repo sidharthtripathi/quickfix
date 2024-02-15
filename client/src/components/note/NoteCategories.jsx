@@ -47,11 +47,10 @@ const NoteCategories = () => {
   const addCategoryHandler = async () => {
     const categoryName = window.prompt("Category name");
 
-    if (!categoryName) return;
-    if (categoryName.trim() === "") {
-      console.log("Emtpy");
-      return;
-    }
+    if (!categoryName || categoryName.trim() === "") return alert('category name can\'t be empty');
+    if (categoryName.includes('-')) return alert("you can't add '-' in the category name")
+
+
     const newCategory = {
       categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
@@ -85,7 +84,7 @@ const NoteCategories = () => {
         <div className="overflow-y-auto pr-2">
           {categories && categories.map((category) => (
             <NavLink
-              to={`/note/categories/${category.categoryName}`}
+              to={`/note/${category.categoryName}-${category._id}`}
               state={{ category }}
               key={category.categoryId}
               className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"

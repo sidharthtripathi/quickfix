@@ -15,8 +15,8 @@ const router = createBrowserRouter([
       {
         path: "/note",
         element: <NoteSection />,
-        children: [{ path: "/note/categories/:category", element: <CategoryNotes /> },
-        { path: "/note/categories/:category/:topic", element: <NoteEditorSection /> }],
+        children: [{ path: "/note/:category", element: <CategoryNotes /> },
+        { path: "/note/:category/:topic", element: <NoteEditorSection /> }],
       },
       { path: "/note", element: <NoteSection /> },
     ],

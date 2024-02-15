@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BlockNoteView, useBlockNote } from "@blocknote/react";
 import "@blocknote/react/style.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addNote } from "../../store/noteSlice";
 import axios from "axios";
@@ -12,14 +12,18 @@ const Editor = () => {
   const [blocks, setBlocks] = useState(null);
   const location = useLocation();
   const dispatch = useDispatch();
-  const data = location?.state;
+  const data = location.state || {};
 
+  const params = useParams();
+  console.log('params editor',params)
   let block;
   if (location.state && location.state.block) {
     block = location.state.block;
   }
 
   useEffect(() => {
+   
+    if(!data) return  console.log('data....',data)
     dispatch(
       addNote({
         categoryId: data.categoryId,
@@ -27,7 +31,7 @@ const Editor = () => {
         note: data.block,
       })
     );
-
+    // console.log('data after....',data)
   }, []);
 
   const editor = useBlockNote({
@@ -35,8 +39,10 @@ const Editor = () => {
     uploadFile: uploadToTmpFilesDotOrg_DEV_ONLY,
 
     onEditorContentChange: (editor) => {
+
       setBlocks(editor?.topLevelBlocks);
 
+      if(!data) return
       dispatch(
         addNote({
           categoryId: data.categoryId,
@@ -47,7 +53,7 @@ const Editor = () => {
     },
   });
   useEffect(() => {
-    if (!block) {
+    if (!block || !data) {
       return;
     }
 
