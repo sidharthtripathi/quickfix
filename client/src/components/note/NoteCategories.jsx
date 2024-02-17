@@ -7,29 +7,6 @@ import useFetch from "../../hooks/useFetch";
 import { API } from "../../utils/api";
 
 const NoteCategories = () => {
-  //   const [categories, setCategories] = useState([
-  //     {
-  //       categoryId: "1",
-  //       categoryName: "Physics",
-  //       notes: [
-  //         {
-  //           noteId: "1",
-  //           noteTitle: "Thermodynamics",
-  //           contentBlocks: [],
-  //         },
-  //         {
-  //           noteId: "2",
-  //           noteTitle: "Quantum Mechanics",
-  //           contentBlocks: [],
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       categoryId: "2",
-  //       categoryName: "Chemistry",
-  //       notes: [],
-  //     },
-  //   ]);
   const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();

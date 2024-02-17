@@ -1,114 +1,40 @@
-const obj1 = [
-    {
-        "id": "754a49bd-f0e7-42a4-a36a-d4bdaf2ec29f",
-        "type": "paragraph",
-        "props": {
-            "textColor": "default",
-            "backgroundColor": "red",
-            "textAlignment": "left"
-        },
-        "content": [
-            {
-                "type": "text",
-                "text": "hi i am "
-            },
-            {
-                "type": "text",
-                "text": "ikram",
-                "styles": {
-                    "bold": true
-                }
-            }
-        ],
-        "children": []
-    },
-    {
-        "id": "2fa30c32-714a-4dcc-a555-a0fdabb34cb7",
-        "type": "paragraph",
-        "props": {
-            "textColor": "default",
-            "backgroundColor": "default",
-            "textAlignment": "left"
-        },
-        "content": [],
-        "children": []
-    }
-]
+// const arr = [1,1,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,0,0,1,1,1,1,1];
 
-// 
-const obj2 =  [
-    {
-      "id": "754a49bd-f0e7-42a4-a36a-d4bdaf2ec29f",
-      "type": "paragraph",
-      "props": {
-        "textColor": "default",
-        "backgroundColor": "red",
-        "textAlignment": "left"
-      },
-      "content": [
-        {
-          "type": "text",
-          "text": "hi i am ",
-          "styles": {}
-        },
-        {
-          "type": "text",
-          "text": "ikram",
-          "styles": {
-            "bold": true
-          }
-        }
-      ],
-      "children": []
-    },
-    {
-      "id": "2fa30c32-714a-4dcc-a555-a0fdabb34cb7",
-      "type": "paragraph",
-      "props": {
-        "textColor": "default",
-        "backgroundColor": "default",
-        "textAlignment": "left"
-      },
-      "content": [],
-      "children": []
-    }
-  ]
-const obj3 =  [
-    {
-      "id": "754a49bd-f0e7-42a4-a36a-d4bdaf2ec29f",
-      "type": "paragraph",
-      "props": {
-        "textColor": "default",
-        "backgroundColor": "red",
-        "textAlignment": "left"
-      },
-      "content": [
-        {
-          "type": "text",
-          "text": "hi i am ",
-          "styles": {}
-        },
-        {
-          "type": "text",
-          "text": "ikram",
-          "styles": {
-            "bold": true
-          }
-        }
-      ],
-      "children": []
-    },
-    {
-      "id": "2fa30c32-714a-4dcc-a555-a0fdabb34cb7",
-      "type": "paragraph",
-      "props": {
-        "textColor": "default",
-        "backgroundColor": "default",
-        "textAlignment": "left"
-      },
-      "content": [],
-      "children": []
-    }
-  ]
+// console.log(arr)
+// let start = 0;
+// let end = arr.length - 1;
 
-  console.log(JSON.stringify(obj1) == JSON.stringify(obj2))
+// while (start < end) {
+//   if (arr[start] === 0) {
+//     start++;
+//   } else if (arr[end] === 1) {
+//     end--;
+//   } else {
+//     // Swap arr[start] and arr[end]
+//     [arr[start], arr[end]] = [arr[end], arr[start]];
+//     start++;
+//     end--;
+//   }
+// }
+//   console.log(arr)
+
+// shift by 1
+let arr = [1, 2, 3, 4, 5, 6];
+
+const firstkElements = [];
+
+const k = 3
+console.log(arr.length - k)
+for (let i = arr.length - 1; i > arr.length - 1-  k; i--) {
+  firstkElements.unshift(arr[i]);
+}
+
+for (let i = arr.length - 1; i > 0 ; i--) {
+  arr[i] = arr[i - k];
+}
+//  arr[0] = lastElement
+console.log(firstkElements);
+for (let i = 0; i < k; i++) {
+    arr[i] = firstkElements[i]
+}
+console.log(arr);
