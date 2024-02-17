@@ -39,38 +39,19 @@ exports.createSubCategory = async (req, res) => {
   res.status(200).json({ message: "...", success: true, data: response });
 };
 
-// exports.postNote = async (req, res) => {
-//   const { categoryId, noteId, noteData } = req.body;
-//   const categories = await Note.findOne({ categoryId: categoryId });
-
-//   const noteIdx = categories.categoryNotes.findIndex(
-//     (c) => c.noteId === noteId
-//   );
-
-//   if (!categories.categoryNotes[noteIdx]) {
-//     console.log("cattegory not found");
-//     return res
-//       .status(404)
-//       .json({ message: "category not found.", success: false });
-//   }
-//   categories.categoryNotes[noteIdx].noteData = noteData;
-//   const response = await categories.save();
-//   res.status(200).json({ message: "...", success: true, data: response });
-// };
-
 exports.postNote = async (req, res) => {
     try {
-      const { categoryId, noteId, noteData } = req.body;
+      const { categoryId, subCategoryId, notes } = req.body;
   
       // Validate input parameters
-      if (!categoryId || !noteId || !noteData) {
+      if (!categoryId || !subCategoryId || !notes) {
         return res.status(400).json({ message: "Invalid input data", success: false });
       }
   
       // Update the note directly in the database
       const updatedNote = await Note.findOneAndUpdate(
-        { categoryId: categoryId, "subCategories.noteId": noteId },
-        { $set: { "subCategories.$.noteData": noteData } },
+        { categoryId: categoryId, "subCategories.subCategoryId": subCategoryId },
+        { $set: { "subCategories.$.notes": notes } },
         { new: true }
       );
   

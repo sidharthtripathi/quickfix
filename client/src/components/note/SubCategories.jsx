@@ -24,9 +24,9 @@ const SubCategories = () => {
     const subCategory = {
       categoryId: category.categoryId,
       subCategory: {
-        noteTitle: subCategoryTitle,
-        noteId: Math.random(),
-        noteData: [],
+        subCategoryName: subCategoryTitle,
+        subCategoryId: Math.random(),
+        notes: [],
       },
     };
     try {
@@ -55,11 +55,11 @@ const SubCategories = () => {
         {category && category.subCategories?.map((subCategory) => (
           <Link
             key={subCategory.noteId}
-            to={`/note/${category.categoryName}-${category._id}/${subCategory.noteTitle}-${subCategory._id}`}
+            to={`/note/${category.categoryName}-${category._id}/${subCategory.subCategoryName}-${subCategory._id}`}
             // state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
             className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
           >
-            <div className="text-white font-medium">{subCategory.noteTitle}</div>
+            <div className="text-white font-medium">{subCategory.subCategoryName}</div>
           </Link>
         ))}
       </div>

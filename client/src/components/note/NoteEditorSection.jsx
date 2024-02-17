@@ -8,20 +8,20 @@ const NoteEditorSection = () => {
 
   const { category: categoryParam, topic: topicParam } = useParams();
   const categoryId = categoryParam.split('-')[1]
-  const noteId = topicParam.split('-')[1]
+  const subCategoryId = topicParam.split('-')[1]
 
   const categoryObj = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
   }) || {};
 
-  const topicObj = categoryObj.subCategories?.find(n => n._id === noteId)
+  const topicObj = categoryObj.subCategories?.find(n => n._id === subCategoryId)
   // console.log(topicObj)
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <h5 className="text-2xl font-bold text-green-500 border-b border-green-400 p-3 m-3 rounded-md flex justify-center shadow">
         {topicObj?.noteTitle}
       </h5>
-      {topicObj && <Editor categoryParam={categoryParam} topicParam={topicParam} categoryId={categoryId} noteId={noteId} categoryObj={categoryObj} topicObj={topicObj} />}
+      {topicObj && <Editor categoryObj={categoryObj} topicObj={topicObj} />}
     </div>
   );
 };

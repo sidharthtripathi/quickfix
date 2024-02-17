@@ -30,9 +30,9 @@ const noteSchema = new mongoose.Schema({
   },
   subCategories: [
     {
-      noteTitle: String,
-      noteId: Number,
-      noteData: [], 
+      subCategoryName: String,
+      subCategoryId: Number,
+      notes: [], 
     },
   ],
 },{ minimize: false });

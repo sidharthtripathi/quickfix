@@ -22,8 +22,8 @@ const Editor = ({
     dispatch(
       addNote({
         categoryId: categoryObj.categoryId,
-        noteId: topicObj.noteId,
-        note: topicObj.noteData,
+        subCategoryId: topicObj.subCategoryId,
+        notes: topicObj.notes,
       })
     );
   }, []);
@@ -41,21 +41,21 @@ const Editor = ({
       dispatch(
         addNote({
           categoryId: categoryObj.categoryId,
-          noteId: topicObj.noteId,
-          note: editor.topLevelBlocks,
+          subCategoryId: topicObj.subCategoryId,
+          notes: editor.topLevelBlocks,
         })
       );
     },
   });
   useEffect(() => {
-    if (!topicObj?.noteData) {
+    if (!topicObj?.notes) {
       return;
     }
 
 
     editor.insertBlocks(
       // block,
-      topicObj.noteData,
+      topicObj.notes,
       //   editor.getTextCursorPosition().block,
       "initialBlockId",
       "after"
@@ -69,8 +69,8 @@ const Editor = ({
 
     const dataToPost = {
       categoryId: categoryObj.categoryId,
-      noteId: topicObj.noteId,
-      noteData: blocks
+      subCategoryId: topicObj.subCategoryId,
+      notes: blocks
     }
 
     try {

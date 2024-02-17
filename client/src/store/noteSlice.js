@@ -11,15 +11,25 @@ const noteSlice = createSlice({
     //     categoryId: "id",
     //     subCategories: [
     //       {
-    //         noteTitle: "thermodynamics",
-    //         noteId: "noteId",
-    //         noteData: [{...},{...},{...}],
+    //         _noteTitle: "thermodynamics",
+    //         _noteId: "subCategoryId",
+    //         _noteData: [{...},{...},{...}],
     //       },
+// ==
+    //     ],
+    //   },
+    // ],
+    // notes: [
+    //   {
+    //     categoryName: "physics ",
+    //     categoryId: "id",
+    //     subCategories: [
     //       {
-    //         title: "motion",
-    //         noteId: "noteId",
-    //         noteData: ["block data"],
+    //         subCategoryName: "thermodynamics",
+    //         subCategoryId: "subCategoryId",
+    //         notes: [{...},{...},{...}],
     //       },
+  
     //     ],
     //   },
     // ],
@@ -51,7 +61,7 @@ const noteSlice = createSlice({
     },
 
     addNote: (state, action) => {
-      const { categoryId, noteId, note } = action.payload;  
+      const { categoryId, subCategoryId, notes } = action.payload;  
       const categoryIdx = state.notes.findIndex(
         (n) => n.categoryId === categoryId
       );
@@ -59,13 +69,13 @@ const noteSlice = createSlice({
       let categoryNoteIdx;
       if (categoryIdx !== -1) {
         categoryNoteIdx = state.notes[categoryIdx].subCategories.findIndex(
-          (n) => n.noteId === noteId
+          (n) => n.subCategoryId === subCategoryId
         );
       }
 
       // console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
       // console.log("note",note)
-      state.notes[categoryIdx].subCategories[categoryNoteIdx].noteData = note;
+      state.notes[categoryIdx].subCategories[categoryNoteIdx].notes = notes;
     },
   },
 });
