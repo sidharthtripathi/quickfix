@@ -12,9 +12,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const authRoute = require("./routes/auth");
 const noteRoute = require("./routes/note");
+const subCategoryRoute = require("./routes/subCategory");
 
 app.use("/auth", authRoute);
 app.use("/note", noteRoute);
+app.use(subCategoryRoute);
 
 app.get('/' , (req,res)=>{
   res.send('welcome')

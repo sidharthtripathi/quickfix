@@ -22,7 +22,7 @@ const SubCategories = () => {
     if (!subCategoryTitle) return;
 
     const subCategory = {
-      categoryId: category.categoryId,
+      categoryId: category._id,
       subCategory: {
         subCategoryName: subCategoryTitle,
         subCategoryId: Math.random(),
@@ -33,7 +33,9 @@ const SubCategories = () => {
 
 
       const response = await axios.patch(API + '/note/create-category-note', subCategory)
+      const r = await axios.post  (API + '/sub', subCategory)
       console.log('response', response)
+      console.log('r', r)
       dispatch(addSubCategoryToStore(subCategory));
     } catch (e) {
       console.log(e)
