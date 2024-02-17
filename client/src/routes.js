@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import ChatSection from "./components/chat/ChatSection";
 import NoteSection from "./components/note/NoteSection";
-import CategoryNotes from "./components/note/CategoryNotes";
 import NoteEditorSection from "./components/note/NoteEditorSection";
 import Login from "./components/auth/LoginPage";
+import SubCategories from "./components/note/SubCategories";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
       {
         path: "/note",
         element: <NoteSection />,
-        children: [{ path: "/note/:category", element: <CategoryNotes /> },
+        children: [{ path: "/note/:category", element: <SubCategories /> },
         { path: "/note/:category/:topic", element: <NoteEditorSection /> }],
       },
       { path: "/note", element: <NoteSection /> },

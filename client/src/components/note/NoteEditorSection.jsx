@@ -14,8 +14,8 @@ const NoteEditorSection = () => {
     return state.note.notes.find((n) => (n._id === categoryId));
   }) || {};
 
-  const topicObj = categoryObj.categoryNotes?.find(n => n._id === noteId)
-  console.log(topicObj)
+  const topicObj = categoryObj.subCategories?.find(n => n._id === noteId)
+  // console.log(topicObj)
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <h5 className="text-2xl font-bold text-green-500 border-b border-green-400 p-3 m-3 rounded-md flex justify-center shadow">

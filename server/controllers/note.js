@@ -15,6 +15,7 @@ exports.getNotes = async (req, res) => {
     data: notes,
   });
 };
+
 exports.createCategory = async (req, res) => {
   const note = new Note(req.body);
   const response = await note.save();
@@ -22,8 +23,8 @@ exports.createCategory = async (req, res) => {
   res.status(201).json({ message: "created", success: true, data: response });
 };
 
-exports.createCategoryNote = async (req, res) => {
-  const { categoryId, info } = req.body;
+exports.createSubCategory = async (req, res) => {
+  const { categoryId, subCategory } = req.body;
   const note = await Note.findOne({ categoryId: categoryId });
 
   if (!note) {
@@ -33,7 +34,7 @@ exports.createCategoryNote = async (req, res) => {
       .json({ message: "category not found.", success: false });
   }
   console.log("notes", note);
-  note.categoryNotes.push(info);
+  note.subCategories.push(subCategory);
   const response = await note.save();
   res.status(200).json({ message: "...", success: true, data: response });
 };
@@ -68,8 +69,8 @@ exports.postNote = async (req, res) => {
   
       // Update the note directly in the database
       const updatedNote = await Note.findOneAndUpdate(
-        { categoryId: categoryId, "categoryNotes.noteId": noteId },
-        { $set: { "categoryNotes.$.noteData": noteData } },
+        { categoryId: categoryId, "subCategories.noteId": noteId },
+        { $set: { "subCategories.$.noteData": noteData } },
         { new: true }
       );
   

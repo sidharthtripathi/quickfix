@@ -1,52 +1,40 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
-import { addNoteInfo } from "../../store/noteSlice";
+import { Link, useParams } from "react-router-dom";
+import { addSubCategoryToStore } from "../../store/noteSlice";
 import axios from "axios";
 import { API } from "../../utils/api";
 
-const CategoryNotes = () => {
+const SubCategories = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
   const params = useParams();
-  console.log('params',params.category.split('-')[1])
 
-  useEffect(() => {
-    
-      // navigate('/note')
-    
-  }, [])
- 
-    const categoryId = params.category.split('-')[1]  
+  const categoryId = params.category.split('-')[1]
 
   const category = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
   }) || {};
 
-  const addNewNote = async () => {
+  const addSubCategory = async () => {
 
-    const noteTitle = window.prompt("Category name");
+    const subCategoryTitle = window.prompt("sub Category");
 
-    if (!noteTitle) return;
+    if (!subCategoryTitle) return;
 
-    
-
-    const noteInfo = {
-      // _id : '65c8ccc016e553a5b61cc1c3',
+    const subCategory = {
       categoryId: category.categoryId,
-      info: {
-        noteTitle: noteTitle,
+      subCategory: {
+        noteTitle: subCategoryTitle,
         noteId: Math.random(),
         noteData: [],
-        // noteData: noteData,
       },
     };
     try {
 
 
-      const response = await axios.patch(API + '/note/create-category-note', noteInfo)
+      const response = await axios.patch(API + '/note/create-category-note', subCategory)
       console.log('response', response)
-      dispatch(addNoteInfo(noteInfo));
+      dispatch(addSubCategoryToStore(subCategory));
     } catch (e) {
       console.log(e)
     }
@@ -56,7 +44,7 @@ const CategoryNotes = () => {
       <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
         <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1>
         <button
-          onClick={addNewNote}
+          onClick={addSubCategory}
           className="bg-white text-teal-500 rounded-full p-2 hover:bg-teal-100 transition duration-150"
         >
           <strong>+</strong>
@@ -64,14 +52,14 @@ const CategoryNotes = () => {
       </div>
 
       <div className="mt-4">
-        {category && category.categoryNotes?.map((note) => (
+        {category && category.subCategories?.map((subCategory) => (
           <Link
-            key={note.noteId}
-            to={`/note/${category.categoryName}-${category._id}/${note.noteTitle}-${note._id}`}
-            state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
+            key={subCategory.noteId}
+            to={`/note/${category.categoryName}-${category._id}/${subCategory.noteTitle}-${subCategory._id}`}
+            // state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
             className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
           >
-            <div className="text-white font-medium">{note.noteTitle}</div>
+            <div className="text-white font-medium">{subCategory.noteTitle}</div>
           </Link>
         ))}
       </div>
@@ -79,4 +67,4 @@ const CategoryNotes = () => {
   );
 };
 
-export default CategoryNotes;
+export default SubCategories;

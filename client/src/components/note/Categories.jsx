@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
-import { addCategory, addingTheFetchedDataToStore } from "../../store/noteSlice";
+import { addCategoryToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { API } from "../../utils/api";
 
-const NoteCategories = () => {
+const Categories = () => {
   const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const NoteCategories = () => {
     const newCategory = {
       categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
-      categoryNotes: [],
+      subCategories: [],
     };
 
     try {
@@ -39,7 +39,7 @@ const NoteCategories = () => {
       await axios.post(API + '/note/create-category', newCategory)
 
       setCategories((prevCategories) => [newCategory, ...prevCategories]);
-      dispatch(addCategory(newCategory));
+      dispatch(addCategoryToStore(newCategory));
     } catch (e) {
       console.log(e)
     }
@@ -59,7 +59,9 @@ const NoteCategories = () => {
           </button>
         </div>
         <div className="overflow-y-auto pr-2">
-          {categories && categories.map((category) => (
+          {categories && categories.map((category) => {
+          console.log('category',category)
+          return (
             <NavLink
               to={`/note/${category.categoryName}-${category._id}`}
               state={{ category }}
@@ -68,7 +70,7 @@ const NoteCategories = () => {
             >
               {category.categoryName}
             </NavLink>
-          ))}
+          )})}
         </div>
       </div>
       <div className="flex-grow p-4 bg-gray-50">
@@ -80,4 +82,4 @@ const NoteCategories = () => {
 
 
 
-export default NoteCategories;
+export default Categories;

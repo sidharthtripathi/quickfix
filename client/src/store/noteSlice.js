@@ -9,7 +9,7 @@ const noteSlice = createSlice({
     //   {
     //     categoryName: "physics ",
     //     categoryId: "id",
-    //     categoryNotes: [
+    //     subCategories: [
     //       {
     //         noteTitle: "thermodynamics",
     //         noteId: "noteId",
@@ -32,22 +32,22 @@ const noteSlice = createSlice({
       state.notes = action.payload;
     },
 
-    addCategory: (state, action) => {
+    addCategoryToStore: (state, action) => {
       console.log("adding", action.payload);
 
       state.notes.push(action.payload);
       console.log("state in add category", JSON.stringify(state.notes));
     },
 
-    addNoteInfo: (state, action) => {
-      const { categoryId, info } = action.payload;
+    addSubCategoryToStore: (state, action) => {
+      const { categoryId, subCategory } = action.payload;
       //   console.log('add note info',action.payload);
       const categoryIdx = state.notes.findIndex((n) => {
         return n.categoryId === categoryId;
       });
 
       if (!state.notes && categoryIdx === -1) return;
-      state.notes[categoryIdx].categoryNotes.push(info);
+      state.notes[categoryIdx].subCategories.push(subCategory);
     },
 
     addNote: (state, action) => {
@@ -58,17 +58,17 @@ const noteSlice = createSlice({
 
       let categoryNoteIdx;
       if (categoryIdx !== -1) {
-        categoryNoteIdx = state.notes[categoryIdx].categoryNotes.findIndex(
+        categoryNoteIdx = state.notes[categoryIdx].subCategories.findIndex(
           (n) => n.noteId === noteId
         );
       }
 
       // console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
       // console.log("note",note)
-      state.notes[categoryIdx].categoryNotes[categoryNoteIdx].noteData = note;
+      state.notes[categoryIdx].subCategories[categoryNoteIdx].noteData = note;
     },
   },
 });
 
-export const { addCategory, addNoteInfo, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
+export const { addCategoryToStore, addSubCategoryToStore, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
 export default noteSlice.reducer;
