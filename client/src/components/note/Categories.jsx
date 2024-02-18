@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
-import { addCategoryToStore,  addingTheFetchedDataToStore } from "../../store/noteSlice";
+import { addCategoryToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { API } from "../../utils/api";
@@ -67,6 +67,7 @@ const Categories = () => {
                 className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"
               >
                 {category.categoryName}
+                <button onClick={() => alert("delete")} className="mx-3 text-red-600">D</button>
               </NavLink>
             )
           })}

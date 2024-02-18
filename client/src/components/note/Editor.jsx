@@ -11,7 +11,7 @@ const Editor = ({
   categoryObj,
   subCategory,
 }) => {
-
+  
   const [blocks, setBlocks] = useState(null);
   const dispatch = useDispatch();
 
