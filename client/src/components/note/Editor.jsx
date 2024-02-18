@@ -10,11 +10,11 @@ import { API } from "../../utils/api";
 const Editor = ({
   categoryObj,
   subCategory,
- }) => {
+}) => {
   const [blocks, setBlocks] = useState(null);
 
   const dispatch = useDispatch();
-// console.log('subCategory',subCategory)
+  // console.log('subCategory',subCategory)
 
   useEffect(() => {
 
@@ -65,11 +65,10 @@ const Editor = ({
 
   const saveNoteHandler = async () => {
 
-
     alert("your note has been saved")
 
     try {
-      const r = await axios.patch(API + '/add-notes/' + subCategory._id, {notes : blocks})
+      const r = await axios.patch(API + '/add-notes/' + subCategory._id, { notes: blocks })
       console.log('response added notes in subcategory', r)
     } catch (error) {
       console.log(error)

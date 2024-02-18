@@ -2,22 +2,11 @@
 //   {
 //     categoryName: "physics ",
 //     categoryId: "id",
-//     subCategories: [
-//         subCategoryId
+//     subCategoryId: [
+//         ...subCategoryId
 //     ],
 //   },
 // ],
-
-//       {
-//         noteTitle: "thermodynamics",
-//         noteId: "noteId",
-//         noteData: [{...},{...},{...}],
-//       },
-//       {
-//         title: "motion",
-//         noteId: "noteId",
-//         noteData: ["block data"],
-//       },
 const mongoose = require("mongoose");
 
 const noteSchema = new mongoose.Schema(
@@ -30,13 +19,6 @@ const noteSchema = new mongoose.Schema(
       type: Number,
       require: true,
     },
-    subCategories: [
-      {
-        subCategoryName: String,
-        subCategoryId: Number,
-        notes: [],
-      },
-    ],
     subCategoryId: [
       {
         ref: "SubCategory",
@@ -53,4 +35,4 @@ noteSchema.methods.addSubCategoryId = function (subCategoryId) {
   return this.save();
 };
 
-module.exports = mongoose.model("Note", noteSchema);
+module.exports = mongoose.model("Category", noteSchema);

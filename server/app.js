@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const authRoute = require("./routes/auth");
-const noteRoute = require("./routes/note");
+const noteRoute = require("./routes/category");
 const subCategoryRoute = require("./routes/subCategory");
 
 app.use("/auth", authRoute);

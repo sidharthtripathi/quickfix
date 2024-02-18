@@ -26,7 +26,7 @@ const subCategorySchema = new mongoose.Schema(
     subCategoryId: Number,
     notes: [],
     categoryId : {
-        ref : 'Note',
+        ref : 'Category',
         type : mongoose.Schema.Types.ObjectId
     }
   },
