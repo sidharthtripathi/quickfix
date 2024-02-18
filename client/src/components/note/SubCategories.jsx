@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { API } from "../../utils/api";
@@ -8,14 +8,14 @@ const SubCategories = () => {
   const params = useParams();
 
   const categoryId = params.category.split('-')[1]
-  
+
   const category = useSelector((state) => {
     return state.note.categories.find((n) => (n._id === categoryId));
   }) || null;
   const subCategory = useSelector((state) => {
     return state.note.subCategories.filter((n) => (n.categoryId === categoryId));
   }) || null;
-    
+
 
   const addSubCategory = async () => {
 
@@ -33,8 +33,6 @@ const SubCategories = () => {
     };
     try {
       const r = await axios.post(API + '/sub', subCategory)
-      console.log('r', r)
-      // dispatch(addSubCategoryToStore(subCategory));
     } catch (e) {
       console.log(e)
     }

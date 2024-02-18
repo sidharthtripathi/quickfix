@@ -11,10 +11,9 @@ const Editor = ({
   categoryObj,
   subCategory,
 }) => {
-  const [blocks, setBlocks] = useState(null);
 
+  const [blocks, setBlocks] = useState(null);
   const dispatch = useDispatch();
-  // console.log('subCategory',subCategory)
 
   useEffect(() => {
 
@@ -22,7 +21,6 @@ const Editor = ({
     if (!categoryObj || !subCategory) return console.log('data....', categoryObj)
     dispatch(
       addNote({
-        categoryId: categoryObj.categoryId,
         subCategoryId: subCategory._id,
         notes: subCategory.notes,
       })
@@ -41,7 +39,6 @@ const Editor = ({
       if (!subCategory || categoryObj) return
       dispatch(
         addNote({
-          categoryId: categoryObj.categoryId,
           subCategoryId: subCategory.subCategoryId,
           notes: editor.topLevelBlocks,
         })

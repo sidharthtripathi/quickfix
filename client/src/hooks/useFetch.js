@@ -16,9 +16,7 @@ const useFetch = (endpoint) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(API+ endpoint);
-        // console.log("response.data.success", response.data);
         if (response.data.success) {
-          // console.log('-------------------------' ,response.data.data, '---------------------------')
           setDataState({
             data: response,
             isLoading: false,

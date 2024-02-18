@@ -26,8 +26,9 @@ exports.addNotes = async (req, res) => {
   try {
     const subCategoryId = req.params.subCategoryId;
     const notes = req.body.notes;
+
     const subCategory = await SubCategory.findOne({ _id: subCategoryId });
-    console.log('subCategory',subCategory)
+
     subCategory.notes = notes;
     const response = await subCategory.save();
 
@@ -42,6 +43,5 @@ exports.addNotes = async (req, res) => {
 };
 exports.getSubCategories = async (req, res) => {
   const subCategories = await SubCategory.find();
-
-  res.status(200).json({ message: "...", success: true, data: subCategories });
+  res.status(200).json({ message: "fetched sub categories", success: true, data: subCategories });
 };

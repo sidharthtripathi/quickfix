@@ -1,23 +1,3 @@
-// categories: [
-//   {
-//     categoryName: "physics ",
-//     categoryId: "id",
-//     subCategories: [
-//         subCategoryId
-//     ],
-//   },
-// ],
-
-//       {
-//         noteTitle: "thermodynamics",
-//         noteId: "noteId",
-//         noteData: [{...},{...},{...}],
-//       },
-//       {
-//         title: "motion",
-//         noteId: "noteId",
-//         noteData: ["block data"],
-//       },
 const mongoose = require("mongoose");
 
 const subCategorySchema = new mongoose.Schema(
