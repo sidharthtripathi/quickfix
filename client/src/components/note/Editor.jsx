@@ -9,23 +9,22 @@ import { API } from "../../utils/api";
 
 const Editor = ({
   categoryObj,
-  topicObj,
   topicObj2,
  }) => {
   const [blocks, setBlocks] = useState(null);
 
   const dispatch = useDispatch();
-
+// console.log('topicObj2',topicObj2)
 
   useEffect(() => {
 
 
-    if (!categoryObj || !topicObj) return console.log('data....', categoryObj)
+    if (!categoryObj || !topicObj2) return console.log('data....', categoryObj)
     dispatch(
       addNote({
         categoryId: categoryObj.categoryId,
-        subCategoryId: topicObj.subCategoryId,
-        notes: topicObj.notes,
+        subCategoryId: topicObj2._id,
+        notes: topicObj2.notes,
       })
     );
   }, []);
@@ -39,25 +38,25 @@ const Editor = ({
 
       setBlocks(editor?.topLevelBlocks);
 
-      if (!topicObj || categoryObj) return
+      if (!topicObj2 || categoryObj) return
       dispatch(
         addNote({
           categoryId: categoryObj.categoryId,
-          subCategoryId: topicObj.subCategoryId,
+          subCategoryId: topicObj2.subCategoryId,
           notes: editor.topLevelBlocks,
         })
       );
     },
   });
   useEffect(() => {
-    if (!topicObj?.notes) {
+    if (!topicObj2?.notes) {
       return;
     }
 
 
     editor.insertBlocks(
       // block,
-      topicObj.notes,
+      topicObj2.notes,
       //   editor.getTextCursorPosition().block,
       "initialBlockId",
       "after"
@@ -69,18 +68,18 @@ const Editor = ({
 
     alert("your note has been saved")
 
-    const dataToPost = {
-      categoryId: categoryObj.categoryId,
-      subCategoryId: topicObj.subCategoryId,
-      notes: blocks
-    }
-console.log('topicObj2._id', topicObj2)
+    // const dataToPost = {
+    //   categoryId: categoryObj.categoryId,
+    //   subCategoryId: topicObj2.subCategoryId,
+    //   notes: blocks
+    // }
+// console.log('topicObj2._id', topicObj2)
     try {
-      const response = await axios.post(API + '/note/add-note', dataToPost)
+      // const response = await axios.post(API + '/note/add-note', dataToPost)
       const r = await axios.patch(API + '/add-notes/' + topicObj2._id, {notes : blocks})
       console.log('response added notes in subcategory', r)
     } catch (error) {
-      console.log('topicObj.subCategoryId',topicObj2._id)
+      // console.log('2.subCategoryId',topicObj2._id)
       console.log(error)
     }
   }

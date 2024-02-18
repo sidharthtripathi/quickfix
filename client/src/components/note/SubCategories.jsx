@@ -14,13 +14,11 @@ const SubCategories = () => {
   
   const category = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
-  }) || {};
+  }) || null;
   const subCategory = useSelector((state) => {
     return state.note.subCategories.filter((n) => (n.categoryId === categoryId));
-  }) || {};
-  
-  console.log('========subCategory==========', subCategory)
-  
+  }) || null;
+    
 
   const addSubCategory = async () => {
 
@@ -29,7 +27,6 @@ const SubCategories = () => {
     if (!subCategoryTitle) return;
 
     const subCategory = {
-      // categoryId: category._id,
       categoryId: categoryId,
       subCategory: {
         subCategoryName: subCategoryTitle,
@@ -40,7 +37,7 @@ const SubCategories = () => {
     try {
 
 
-      const response = await axios.patch(API + '/note/create-category-note', subCategory)
+      // const response = await axios.patch(API + '/note/create-category-note', subCategory)
       const r = await axios.post(API + '/sub', subCategory)
       // console.log('response', response)
       console.log('r', r)
@@ -53,7 +50,6 @@ const SubCategories = () => {
     <div className="mx-10 my-4">
       <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
         <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1>
-        {/* <h1 className="text-xl text-white font-semibold">{subCategories.data && subCategories.data.data?.data.category.categoryName}</h1> */}
         <button
           onClick={addSubCategory}
           className="bg-white text-teal-500 rounded-full p-2 hover:bg-teal-100 transition duration-150"
@@ -63,26 +59,15 @@ const SubCategories = () => {
       </div>
 
       <div className="mt-4">
-        {category && category.subCategories?.map((subCategory) => (
+        {subCategory && subCategory.map((subCategory) => (
           <Link
-            key={subCategory.noteId}
-            to={`/note/${category.categoryName}-${category._id}/${subCategory.subCategoryName}-${subCategory._id}`}
-            // state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
+            key={subCategory._id}
+            to={`/note/${category.categoryName}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
             className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
           >
             <div className="text-white font-medium">{subCategory.subCategoryName}</div>
           </Link>
         ))}
-        {/* {subCategory && subCategory.map((subCategory) => (
-          <Link
-            key={subCategory.noteId}
-            to={`/note/${'subCategory'}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
-            // state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
-            className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
-          >
-            <div className="text-white font-medium">{subCategory.subCategoryName}</div>
-          </Link>
-        ))} */}
       </div>
     </div>
   );

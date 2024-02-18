@@ -71,21 +71,30 @@ const noteSlice = createSlice({
       state.subCategories = action.payload
     },
     addNote: (state, action) => {
-      const { categoryId, subCategoryId, notes } = action.payload;  
-      const categoryIdx = state.notes.findIndex(
-        (n) => n.categoryId === categoryId
-      );
+      const { _, subCategoryId, notes } = action.payload; 
+      console.log('adding notes') 
+      console.log('subCategoryId',subCategoryId) 
+      // console.log('notes',notes) 
+      // // const categoryIdx = state.notes.findIndex(
+      // //   (n) => n.categoryId === categoryId
+      // // );
 
-      let categoryNoteIdx;
-      if (categoryIdx !== -1) {
-        categoryNoteIdx = state.notes[categoryIdx].subCategories.findIndex(
-          (n) => n.subCategoryId === subCategoryId
+
+
+        const subCategoryIdx = state.subCategories.findIndex(
+          (n) => n._id === subCategoryId
         );
-      }
+        
+        // console.log('subCategoryIdx',JSON.parse(JSON.stringify(state.subCategories))) 
+        console.log('subCategoryIdx', subCategoryIdx) 
+        if(subCategoryIdx !== -1){
+          
+          state.subCategories[subCategoryIdx].notes = notes
+        }
 
-      // console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
-      // console.log("note",note)
-      state.notes[categoryIdx].subCategories[categoryNoteIdx].notes = notes;
+      // // console.log('noteidx', JSON.parse(JSON.stringify(state.notes[categoryIdx].categoryNotes[categoryNoteIdx])) )
+      // // console.log("note",note)
+      // // state.notes[categoryIdx].subCategories[categoryNoteIdx].notes = notes;
     },
   },
 });

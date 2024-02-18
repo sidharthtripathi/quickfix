@@ -12,28 +12,20 @@ const NoteEditorSection = () => {
 
   const categoryObj = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
-  }) || {};
-  // const subCategories = useSelector((state) => {
-  //   return state.note.subCategories
-  //   // .find((subCategory)=> subCategory.categoryId === categoryId )
-  // }) || [];
+  }) || null;
 
-  // console.log('==========', subCategoryId, '==========')
 
-  const topicObj = categoryObj.subCategories?.find(n => n._id === subCategoryId)
   const topicObj2 = useSelector((state) => {
     return state.note.subCategories.find(e => e._id === subCategoryId)
-  }) || {};
-  // console.log('obj 2 ', topicObj2)
-  // console.log('obj ', topicObj)
+  }) || null;
+  console.log('obj 2 ', topicObj2)
 
   return (
     <div style={{ width: "100%", height: "100%" }}>
       <h5 className="text-2xl font-bold text-green-500 border-b border-green-400 p-3 m-3 rounded-md flex justify-center shadow">
-        {topicObj?.subCategoryName}
+        {topicObj2?.subCategoryName}
       </h5>
-      {topicObj && <Editor categoryObj={categoryObj} topicObj={topicObj} topicObj2={topicObj2}/>}
-      {/* { <Editor categoryObj={categoryObj} topicObj={topicObj} />} */}
+      {topicObj2 && <Editor categoryObj={categoryObj} topicObj2={topicObj2}/>}
     </div>
   );
 };

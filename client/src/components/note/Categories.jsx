@@ -11,16 +11,8 @@ const Categories = () => {
 
   const dispatch = useDispatch();
 
-  // console.log('notes sextion ')
 
   const dataState = useFetch("/note/notes")
-  const subCategories = useFetch('/subcategories')
-  useEffect(() => {
-    if(!subCategories.data) return;
-    const subCategoriesData= subCategories.data?.data.data;
-    dispatch(addSubcategoriesToStore(subCategoriesData))
-    
-  }, [subCategories?.isLoading])
   useEffect(() => {
     if (!dataState.data) {
       return console.log('data not fetched yet')
@@ -39,7 +31,7 @@ const Categories = () => {
     const newCategory = {
       categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
-      subCategories: [],
+      // subCategories: [],
     };
 
     try {
@@ -68,17 +60,17 @@ const Categories = () => {
         </div>
         <div className="overflow-y-auto pr-2">
           {categories && categories.map((category) => {
-          // console.log('category',category)
-          return (
-            <NavLink
-              to={`/note/${category.categoryName}-${category._id}`}
-              state={{ category }}
-              key={category.categoryId}
-              className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"
-            >
-              {category.categoryName}
-            </NavLink>
-          )})}
+            return (
+              <NavLink
+                to={`/note/${category.categoryName}-${category._id}`}
+                state={{ category }}
+                key={category.categoryId}
+                className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"
+              >
+                {category.categoryName}
+              </NavLink>
+            )
+          })}
         </div>
       </div>
       <div className="flex-grow p-4 bg-gray-50">
