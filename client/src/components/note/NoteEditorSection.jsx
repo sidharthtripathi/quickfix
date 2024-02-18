@@ -18,14 +18,14 @@ const NoteEditorSection = () => {
   //   // .find((subCategory)=> subCategory.categoryId === categoryId )
   // }) || [];
 
-  // console.log('==========', subCategories, '==========')
+  // console.log('==========', subCategoryId, '==========')
 
   const topicObj = categoryObj.subCategories?.find(n => n._id === subCategoryId)
   const topicObj2 = useSelector((state) => {
-    return state.note.subCategories.find(e => e.categoryId === categoryId)
+    return state.note.subCategories.find(e => e._id === subCategoryId)
   }) || {};
-  console.log('obj 2 ', topicObj2)
-  console.log('obj ', topicObj)
+  // console.log('obj 2 ', topicObj2)
+  // console.log('obj ', topicObj)
 
   return (
     <div style={{ width: "100%", height: "100%" }}>

@@ -27,6 +27,7 @@ exports.addNotes = async (req, res) => {
     const subCategoryId = req.params.subCategoryId;
     const notes = req.body.notes;
     const subCategory = await SubCategory.findOne({ _id: subCategoryId });
+    console.log('subCategory',subCategory)
     subCategory.notes = notes;
     const response = await subCategory.save();
 

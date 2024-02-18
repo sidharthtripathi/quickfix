@@ -74,7 +74,7 @@ const Editor = ({
       subCategoryId: topicObj.subCategoryId,
       notes: blocks
     }
-console.log(' block', blocks)
+console.log('topicObj2._id', topicObj2)
     try {
       const response = await axios.post(API + '/note/add-note', dataToPost)
       const r = await axios.patch(API + '/add-notes/' + topicObj2._id, {notes : blocks})

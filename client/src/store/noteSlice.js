@@ -38,16 +38,16 @@ const noteSlice = createSlice({
 
   reducers: {
     addingTheFetchedDataToStore: (state, action) => {
-      console.log("adding notes data", action.payload);
+      // console.log("adding notes data", action.payload);
 
       state.notes = action.payload;
     },
 
     addCategoryToStore: (state, action) => {
-      console.log("adding", action.payload);
+      // console.log("adding", action.payload);
 
       state.notes.push(action.payload);
-      console.log("state in add category", JSON.stringify(state.notes));
+      // console.log("state in add category", JSON.stringify(state.notes));
     },
 
     addSubCategoryToStore: (state, action) => {

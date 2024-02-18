@@ -11,16 +11,13 @@ const Categories = () => {
 
   const dispatch = useDispatch();
 
-  console.log('notes sextion ')
+  // console.log('notes sextion ')
 
   const dataState = useFetch("/note/notes")
   const subCategories = useFetch('/subcategories')
   useEffect(() => {
     if(!subCategories.data) return;
     const subCategoriesData= subCategories.data?.data.data;
-    console.log('--------------------------------')
-    console.log('subCategoriesData',subCategoriesData)
-    console.log('--------------------------------')
     dispatch(addSubcategoriesToStore(subCategoriesData))
     
   }, [subCategories?.isLoading])
@@ -71,7 +68,7 @@ const Categories = () => {
         </div>
         <div className="overflow-y-auto pr-2">
           {categories && categories.map((category) => {
-          console.log('category',category)
+          // console.log('category',category)
           return (
             <NavLink
               to={`/note/${category.categoryName}-${category._id}`}

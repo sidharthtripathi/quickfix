@@ -9,14 +9,17 @@ import useFetch from "../../hooks/useFetch";
 const SubCategories = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  // console.log('subCategories- ---- ',subCategories)
 
   const categoryId = params.category.split('-')[1]
   
   const category = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
   }) || {};
-  // console.log('==================', subCategories?.data?.data?.data)
+  const subCategory = useSelector((state) => {
+    return state.note.subCategories.filter((n) => (n.categoryId === categoryId));
+  }) || {};
+  
+  console.log('========subCategory==========', subCategory)
   
 
   const addSubCategory = async () => {
@@ -39,7 +42,7 @@ const SubCategories = () => {
 
       const response = await axios.patch(API + '/note/create-category-note', subCategory)
       const r = await axios.post(API + '/sub', subCategory)
-      console.log('response', response)
+      // console.log('response', response)
       console.log('r', r)
       dispatch(addSubCategoryToStore(subCategory));
     } catch (e) {
@@ -70,10 +73,10 @@ const SubCategories = () => {
             <div className="text-white font-medium">{subCategory.subCategoryName}</div>
           </Link>
         ))}
-        {/* {subCategories.data && subCategories.data.data?.data.SubCategories.map((subCategory) => (
+        {/* {subCategory && subCategory.map((subCategory) => (
           <Link
             key={subCategory.noteId}
-            to={`/note/${subCategories.data.data?.data.category.categoryName}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
+            to={`/note/${'subCategory'}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
             // state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
             className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
           >
