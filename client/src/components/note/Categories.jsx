@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
-import { addCategoryToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
+import { addCategoryToStore, addSubcategoriesToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { API } from "../../utils/api";
@@ -11,8 +11,19 @@ const Categories = () => {
 
   const dispatch = useDispatch();
 
-  const dataState = useFetch("/note/notes")
+  console.log('notes sextion ')
 
+  const dataState = useFetch("/note/notes")
+  const subCategories = useFetch('/subcategories')
+  useEffect(() => {
+    if(!subCategories.data) return;
+    const subCategoriesData= subCategories.data?.data.data;
+    console.log('--------------------------------')
+    console.log('subCategoriesData',subCategoriesData)
+    console.log('--------------------------------')
+    dispatch(addSubcategoriesToStore(subCategoriesData))
+    
+  }, [subCategories?.isLoading])
   useEffect(() => {
     if (!dataState.data) {
       return console.log('data not fetched yet')

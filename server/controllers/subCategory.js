@@ -18,12 +18,29 @@ exports.createSubCategory = async (req, res) => {
 };
 
 exports.getSubCategories = async (req, res) => {
-  const { categoryId } = req.params;
+  const subCategories = await SubCategory.find();
 
-  console.log("in subcategory controller");
-  console.log("in subcategory controller", categoryId);
-  const category = await Note.findById(categoryId).select('categoryName');
-  const SubCategories = await SubCategory.find({ categoryId: categoryId });
+  res.status(200).json({ message: "...", success: true, data: subCategories });
+};
+exports.addNotes = async (req, res) => {
+  try {
+    const subCategoryId = req.params.subCategoryId;
+    const notes = req.body.notes;
+    const subCategory = await SubCategory.findOne({ _id: subCategoryId });
+    subCategory.notes = notes;
+    const response = await subCategory.save();
 
-  res.status(200).json({ message: "...", success: true, data: {SubCategories,category} });
+    res.status(200).json({
+      message: "add notes to subcategory",
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+exports.getSubCategories = async (req, res) => {
+  const subCategories = await SubCategory.find();
+
+  res.status(200).json({ message: "...", success: true, data: subCategories });
 };

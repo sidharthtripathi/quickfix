@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { addSubCategoryToStore } from "../../store/noteSlice";
+import { addSubCategoryToStore, addSubcategoriesToStore } from "../../store/noteSlice";
 import axios from "axios";
 import { API } from "../../utils/api";
 import useFetch from "../../hooks/useFetch";
@@ -10,14 +10,15 @@ const SubCategories = () => {
   const dispatch = useDispatch();
   const params = useParams();
   // console.log('subCategories- ---- ',subCategories)
-  
-  const categoryId = params.category.split('-')[1]
-  const subCategories = useFetch('/subcategories/' + categoryId)
 
+  const categoryId = params.category.split('-')[1]
+  
   const category = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
   }) || {};
-console.log('==================',subCategories?.data?.data?.data)
+  // console.log('==================', subCategories?.data?.data?.data)
+  
+
   const addSubCategory = async () => {
 
     const subCategoryTitle = window.prompt("sub Category");
@@ -37,7 +38,7 @@ console.log('==================',subCategories?.data?.data?.data)
 
 
       const response = await axios.patch(API + '/note/create-category-note', subCategory)
-      const r = await axios.post  (API + '/sub', subCategory)
+      const r = await axios.post(API + '/sub', subCategory)
       console.log('response', response)
       console.log('r', r)
       dispatch(addSubCategoryToStore(subCategory));
@@ -48,8 +49,8 @@ console.log('==================',subCategories?.data?.data?.data)
   return (
     <div className="mx-10 my-4">
       <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
-        {/* <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1> */}
-        <h1 className="text-xl text-white font-semibold">{subCategories.data  && subCategories.data.data?.data.category.categoryName}</h1>
+        <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1>
+        {/* <h1 className="text-xl text-white font-semibold">{subCategories.data && subCategories.data.data?.data.category.categoryName}</h1> */}
         <button
           onClick={addSubCategory}
           className="bg-white text-teal-500 rounded-full p-2 hover:bg-teal-100 transition duration-150"
@@ -69,7 +70,16 @@ console.log('==================',subCategories?.data?.data?.data)
             <div className="text-white font-medium">{subCategory.subCategoryName}</div>
           </Link>
         ))}
-
+        {/* {subCategories.data && subCategories.data.data?.data.SubCategories.map((subCategory) => (
+          <Link
+            key={subCategory.noteId}
+            to={`/note/${subCategories.data.data?.data.category.categoryName}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
+            // state={{ title: note.noteTitle, categoryId: category.categoryId, noteId: note.noteId, block: note.noteData }}
+            className="block my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
+          >
+            <div className="text-white font-medium">{subCategory.subCategoryName}</div>
+          </Link>
+        ))} */}
       </div>
     </div>
   );

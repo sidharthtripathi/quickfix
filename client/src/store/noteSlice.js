@@ -4,6 +4,7 @@ const noteSlice = createSlice({
   name: "note",
   initialState: {
     notes: [],
+    subCategories : []
 
     // notes: [
     //   {
@@ -52,14 +53,23 @@ const noteSlice = createSlice({
     addSubCategoryToStore: (state, action) => {
       const { categoryId, subCategory } = action.payload;
       //   console.log('add note info',action.payload);
+      // console.log('subCategory == ',{categoryId,subCategory})
       const categoryIdx = state.notes.findIndex((n) => {
         return n.categoryId === categoryId;
       });
+
+      // state.subCategories.push({categoryId,subCategory})
 
       if (!state.notes && categoryIdx === -1) return;
       state.notes[categoryIdx].subCategories.push(subCategory);
     },
 
+
+
+    addSubcategoriesToStore: (state, action) => {
+      console.log('paylaod ', action.payload)
+      state.subCategories = action.payload
+    },
     addNote: (state, action) => {
       const { categoryId, subCategoryId, notes } = action.payload;  
       const categoryIdx = state.notes.findIndex(
@@ -80,5 +90,5 @@ const noteSlice = createSlice({
   },
 });
 
-export const { addCategoryToStore, addSubCategoryToStore, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
+export const { addCategoryToStore, addSubcategoriesToStore,addSubCategoryToStore, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
 export default noteSlice.reducer;

@@ -9,7 +9,9 @@ import { API } from "../../utils/api";
 
 const Editor = ({
   categoryObj,
-  topicObj, }) => {
+  topicObj,
+  topicObj2,
+ }) => {
   const [blocks, setBlocks] = useState(null);
 
   const dispatch = useDispatch();
@@ -72,11 +74,13 @@ const Editor = ({
       subCategoryId: topicObj.subCategoryId,
       notes: blocks
     }
-
+console.log(' block', blocks)
     try {
       const response = await axios.post(API + '/note/add-note', dataToPost)
-      console.log(response)
+      const r = await axios.patch(API + '/add-notes/' + topicObj2._id, {notes : blocks})
+      console.log('response added notes in subcategory', r)
     } catch (error) {
+      console.log('topicObj.subCategoryId',topicObj2._id)
       console.log(error)
     }
   }
