@@ -4,17 +4,20 @@ import { Link, useParams } from "react-router-dom";
 import { addSubCategoryToStore } from "../../store/noteSlice";
 import axios from "axios";
 import { API } from "../../utils/api";
+import useFetch from "../../hooks/useFetch";
 
 const SubCategories = () => {
   const dispatch = useDispatch();
   const params = useParams();
-
+  // console.log('subCategories- ---- ',subCategories)
+  
   const categoryId = params.category.split('-')[1]
+  const subCategories = useFetch('/subcategories/' + categoryId)
 
   const category = useSelector((state) => {
     return state.note.notes.find((n) => (n._id === categoryId));
   }) || {};
-
+console.log('==================',subCategories?.data?.data?.data)
   const addSubCategory = async () => {
 
     const subCategoryTitle = window.prompt("sub Category");
@@ -22,7 +25,8 @@ const SubCategories = () => {
     if (!subCategoryTitle) return;
 
     const subCategory = {
-      categoryId: category._id,
+      // categoryId: category._id,
+      categoryId: categoryId,
       subCategory: {
         subCategoryName: subCategoryTitle,
         subCategoryId: Math.random(),
@@ -44,7 +48,8 @@ const SubCategories = () => {
   return (
     <div className="mx-10 my-4">
       <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
-        <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1>
+        {/* <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1> */}
+        <h1 className="text-xl text-white font-semibold">{subCategories.data  && subCategories.data.data?.data.category.categoryName}</h1>
         <button
           onClick={addSubCategory}
           className="bg-white text-teal-500 rounded-full p-2 hover:bg-teal-100 transition duration-150"
@@ -64,6 +69,7 @@ const SubCategories = () => {
             <div className="text-white font-medium">{subCategory.subCategoryName}</div>
           </Link>
         ))}
+
       </div>
     </div>
   );
