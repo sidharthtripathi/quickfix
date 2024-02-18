@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const noteSlice = createSlice({
   name: "note",
   initialState: {
-    notes: [],
+    categories: [],
     subCategories : []
 
     // notes: [
@@ -40,29 +40,29 @@ const noteSlice = createSlice({
     addingTheFetchedDataToStore: (state, action) => {
       // console.log("adding notes data", action.payload);
 
-      state.notes = action.payload;
+      state.categories = action.payload;
     },
 
     addCategoryToStore: (state, action) => {
       // console.log("adding", action.payload);
 
-      state.notes.push(action.payload);
+      state.categories.push(action.payload);
       // console.log("state in add category", JSON.stringify(state.notes));
     },
 
-    addSubCategoryToStore: (state, action) => {
-      const { categoryId, subCategory } = action.payload;
-      //   console.log('add note info',action.payload);
-      // console.log('subCategory == ',{categoryId,subCategory})
-      const categoryIdx = state.notes.findIndex((n) => {
-        return n.categoryId === categoryId;
-      });
+    // addSubCategoryToStore: (state, action) => {
+    //   const { categoryId, subCategory } = action.payload;
+    //   //   console.log('add note info',action.payload);
+    //   // console.log('subCategory == ',{categoryId,subCategory})
+    //   // const categoryIdx = state.categories.findIndex((n) => {
+    //   //   return n.categoryId === categoryId;
+    //   // });
 
-      // state.subCategories.push({categoryId,subCategory})
+    //   // state.subCategories.push({categoryId,subCategory})
 
-      if (!state.notes && categoryIdx === -1) return;
-      state.notes[categoryIdx].subCategories.push(subCategory);
-    },
+    //   // if (!state.notes && categoryIdx === -1) return;
+    //   // state.categories[categoryIdx].subCategories.push(subCategory);
+    // },
 
 
 
@@ -99,5 +99,5 @@ const noteSlice = createSlice({
   },
 });
 
-export const { addCategoryToStore, addSubcategoriesToStore,addSubCategoryToStore, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
+export const { addCategoryToStore, addSubcategoriesToStore, addNote, addingTheFetchedDataToStore } = noteSlice.actions;
 export default noteSlice.reducer;

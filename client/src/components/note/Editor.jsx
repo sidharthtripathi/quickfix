@@ -9,22 +9,22 @@ import { API } from "../../utils/api";
 
 const Editor = ({
   categoryObj,
-  topicObj2,
+  subCategory,
  }) => {
   const [blocks, setBlocks] = useState(null);
 
   const dispatch = useDispatch();
-// console.log('topicObj2',topicObj2)
+// console.log('subCategory',subCategory)
 
   useEffect(() => {
 
 
-    if (!categoryObj || !topicObj2) return console.log('data....', categoryObj)
+    if (!categoryObj || !subCategory) return console.log('data....', categoryObj)
     dispatch(
       addNote({
         categoryId: categoryObj.categoryId,
-        subCategoryId: topicObj2._id,
-        notes: topicObj2.notes,
+        subCategoryId: subCategory._id,
+        notes: subCategory.notes,
       })
     );
   }, []);
@@ -38,25 +38,25 @@ const Editor = ({
 
       setBlocks(editor?.topLevelBlocks);
 
-      if (!topicObj2 || categoryObj) return
+      if (!subCategory || categoryObj) return
       dispatch(
         addNote({
           categoryId: categoryObj.categoryId,
-          subCategoryId: topicObj2.subCategoryId,
+          subCategoryId: subCategory.subCategoryId,
           notes: editor.topLevelBlocks,
         })
       );
     },
   });
   useEffect(() => {
-    if (!topicObj2?.notes) {
+    if (!subCategory?.notes) {
       return;
     }
 
 
     editor.insertBlocks(
       // block,
-      topicObj2.notes,
+      subCategory.notes,
       //   editor.getTextCursorPosition().block,
       "initialBlockId",
       "after"
@@ -70,16 +70,16 @@ const Editor = ({
 
     // const dataToPost = {
     //   categoryId: categoryObj.categoryId,
-    //   subCategoryId: topicObj2.subCategoryId,
+    //   subCategoryId: subCategory.subCategoryId,
     //   notes: blocks
     // }
-// console.log('topicObj2._id', topicObj2)
+// console.log('subCategory._id', subCategory)
     try {
       // const response = await axios.post(API + '/note/add-note', dataToPost)
-      const r = await axios.patch(API + '/add-notes/' + topicObj2._id, {notes : blocks})
+      const r = await axios.patch(API + '/add-notes/' + subCategory._id, {notes : blocks})
       console.log('response added notes in subcategory', r)
     } catch (error) {
-      // console.log('2.subCategoryId',topicObj2._id)
+      // console.log('2.subCategoryId',subCategory._id)
       console.log(error)
     }
   }

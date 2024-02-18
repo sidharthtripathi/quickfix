@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { addSubCategoryToStore, addSubcategoriesToStore } from "../../store/noteSlice";
+// import { addSubCategoryToStore, addSubcategoriesToStore } from "../../store/noteSlice";
 import axios from "axios";
 import { API } from "../../utils/api";
-import useFetch from "../../hooks/useFetch";
+// import useFetch from "../../hooks/useFetch";
 
 const SubCategories = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const SubCategories = () => {
   const categoryId = params.category.split('-')[1]
   
   const category = useSelector((state) => {
-    return state.note.notes.find((n) => (n._id === categoryId));
+    return state.note.categories.find((n) => (n._id === categoryId));
   }) || null;
   const subCategory = useSelector((state) => {
     return state.note.subCategories.filter((n) => (n.categoryId === categoryId));
@@ -35,13 +35,11 @@ const SubCategories = () => {
       },
     };
     try {
-
-
       // const response = await axios.patch(API + '/note/create-category-note', subCategory)
       const r = await axios.post(API + '/sub', subCategory)
       // console.log('response', response)
       console.log('r', r)
-      dispatch(addSubCategoryToStore(subCategory));
+      // dispatch(addSubCategoryToStore(subCategory));
     } catch (e) {
       console.log(e)
     }
@@ -49,7 +47,7 @@ const SubCategories = () => {
   return (
     <div className="mx-10 my-4">
       <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
-        <h1 className="text-xl text-white font-semibold">{category.categoryName}</h1>
+        <h1 className="text-xl text-white font-semibold">{category?.categoryName}</h1>
         <button
           onClick={addSubCategory}
           className="bg-white text-teal-500 rounded-full p-2 hover:bg-teal-100 transition duration-150"
