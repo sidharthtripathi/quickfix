@@ -1,13 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-// import { addSubCategoryToStore, addSubcategoriesToStore } from "../../store/noteSlice";
 import axios from "axios";
 import { API } from "../../utils/api";
-// import useFetch from "../../hooks/useFetch";
 
 const SubCategories = () => {
-  const dispatch = useDispatch();
   const params = useParams();
 
   const categoryId = params.category.split('-')[1]
@@ -35,9 +32,7 @@ const SubCategories = () => {
       },
     };
     try {
-      // const response = await axios.patch(API + '/note/create-category-note', subCategory)
       const r = await axios.post(API + '/sub', subCategory)
-      // console.log('response', response)
       console.log('r', r)
       // dispatch(addSubCategoryToStore(subCategory));
     } catch (e) {

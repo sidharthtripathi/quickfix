@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
-import { addCategoryToStore, addSubcategoriesToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
+import { addCategoryToStore,  addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
 import { API } from "../../utils/api";
@@ -31,7 +31,6 @@ const Categories = () => {
     const newCategory = {
       categoryId: categories.length + Math.floor(Math.random() * 9000 + 1000),
       categoryName: categoryName,
-      // subCategories: [],
     };
 
     try {

@@ -68,18 +68,10 @@ const Editor = ({
 
     alert("your note has been saved")
 
-    // const dataToPost = {
-    //   categoryId: categoryObj.categoryId,
-    //   subCategoryId: subCategory.subCategoryId,
-    //   notes: blocks
-    // }
-// console.log('subCategory._id', subCategory)
     try {
-      // const response = await axios.post(API + '/note/add-note', dataToPost)
       const r = await axios.patch(API + '/add-notes/' + subCategory._id, {notes : blocks})
       console.log('response added notes in subcategory', r)
     } catch (error) {
-      // console.log('2.subCategoryId',subCategory._id)
       console.log(error)
     }
   }
