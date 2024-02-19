@@ -1,9 +1,8 @@
 const SubCategory = require("../models/subCategory");
-const Note = require("../models/category");
+const Category = require("../models/category");
+
 exports.createSubCategory = async (req, res) => {
   const { categoryId, subCategory } = req.body;
-
-  console.log("in subcategory controller");
 
   const sub_category = new SubCategory({
     ...subCategory,
@@ -11,7 +10,8 @@ exports.createSubCategory = async (req, res) => {
   });
   const response = await sub_category.save();
 
-  const category = await Note.findOne({ _id: categoryId });
+  const category = await Category.findOne({ _id: categoryId });
+  console.log("response._id", response._id);
   await category.addSubCategoryId(response._id);
 
   res.status(200).json({ message: "...", success: true, data: response });
@@ -22,6 +22,7 @@ exports.getSubCategories = async (req, res) => {
 
   res.status(200).json({ message: "...", success: true, data: subCategories });
 };
+
 exports.addNotes = async (req, res) => {
   try {
     const subCategoryId = req.params.subCategoryId;
@@ -43,5 +44,11 @@ exports.addNotes = async (req, res) => {
 };
 exports.getSubCategories = async (req, res) => {
   const subCategories = await SubCategory.find();
-  res.status(200).json({ message: "fetched sub categories", success: true, data: subCategories });
+  res
+    .status(200)
+    .json({
+      message: "fetched sub categories",
+      success: true,
+      data: subCategories,
+    });
 };

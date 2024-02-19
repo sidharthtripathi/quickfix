@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
 import { addCategoryToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
 import axios from "axios";
@@ -7,19 +7,9 @@ import useFetch from "../../hooks/useFetch";
 import { API } from "../../utils/api";
 
 const Categories = () => {
-  const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
-
-
-  const dataState = useFetch("/note/notes")
-  useEffect(() => {
-    if (!dataState.data) {
-      return console.log('data not fetched yet')
-    }
-    setCategories(dataState.data.data.data)
-    dispatch(addingTheFetchedDataToStore(dataState.data.data.data))
-  }, [dataState?.isLoading])
+  const categories = useSelector((state) => state.note.categories) || null;
 
   const addCategoryHandler = async () => {
     const categoryName = window.prompt("Category name");
@@ -34,11 +24,8 @@ const Categories = () => {
     };
 
     try {
-
-      await axios.post(API + '/note/create-category', newCategory)
-
-      setCategories((prevCategories) => [newCategory, ...prevCategories]);
-      dispatch(addCategoryToStore(newCategory));
+      const response = await axios.post(API + '/note/create-category', newCategory)
+      dispatch(addCategoryToStore(response.data.data));
     } catch (e) {
       console.log(e)
     }
