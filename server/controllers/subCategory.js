@@ -44,11 +44,9 @@ exports.addNotes = async (req, res) => {
 };
 exports.getSubCategories = async (req, res) => {
   const subCategories = await SubCategory.find();
-  res
-    .status(200)
-    .json({
-      message: "fetched sub categories",
-      success: true,
-      data: subCategories,
-    });
+  res.status(200).json({
+    message: "fetched sub categories",
+    success: true,
+    data: subCategories,
+  });
 };
