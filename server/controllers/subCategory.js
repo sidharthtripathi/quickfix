@@ -1,35 +1,60 @@
 const SubCategory = require("../models/subCategory");
 const Category = require("../models/category");
-const { default: mongoose } = require("mongoose");
 
-exports.createSubCategory = async (req, res) => {
+exports.createSubCategory = async (req, res, next) => {
   const { categoryId, subCategory } = req.body;
 
-  const sub_category = new SubCategory({
-    ...subCategory,
-    categoryId: categoryId,
-  });
-  const response = await sub_category.save();
+  if (!categoryId || !subCategory) {
+    const error = new Error("CategoryId and subCategory Details are required.");
+    error.statusCode = 400;
+    throw error;
+  }
 
-  const category = await Category.findOne({ _id: categoryId });
-  console.log("response._id", response._id);
-  await category.addSubCategoryId(response._id);
-
-  res.status(200).json({ message: "...", success: true, data: response });
-};
-
-exports.getSubCategories = async (req, res) => {
-  const subCategories = await SubCategory.find();
-
-  res.status(200).json({ message: "...", success: true, data: subCategories });
-};
-
-exports.addNotes = async (req, res) => {
   try {
-    const subCategoryId = req.params.subCategoryId;
-    const notes = req.body.notes;
+    const sub_category = new SubCategory({
+      ...subCategory,
+      categoryId: categoryId,
+    });
+    const response = await sub_category.save();
 
+    const category = await Category.findOne({ _id: categoryId });
+    if (!category) {
+      const error = new Error("Category Doesn't found!.");
+      error.statusCode = 404;
+      throw error;
+    }
+
+    await category.addSubCategoryId(response._id);
+    res.status(201).json({
+      message: "SubCategory has been created successfully",
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
+};
+
+exports.addNotes = async (req, res, next) => {
+  const subCategoryId = req.params.subCategoryId;
+  const notes = req.body.notes;
+
+  if (!subCategoryId || !notes) {
+    const error = new Error("subCategoryId and notes are required.");
+    error.statusCode = 400;
+    throw error;
+  }
+  try {
     const subCategory = await SubCategory.findOne({ _id: subCategoryId });
+
+    if (!subCategory) {
+      const error = new Error("SubCategory not found");
+      error.statusCode = 404;
+      throw error;
+    }
 
     subCategory.notes = notes;
     const response = await subCategory.save();
@@ -40,44 +65,57 @@ exports.addNotes = async (req, res) => {
       data: response,
     });
   } catch (error) {
-    console.log(error);
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
   }
 };
-exports.getSubCategories = async (req, res) => {
-  const subCategories = await SubCategory.find();
-  res.status(200).json({
-    message: "fetched sub categories",
-    success: true,
-    data: subCategories,
-  });
+exports.getSubCategories = async (req, res, next) => {
+  try {
+    const subCategories = await SubCategory.find();
+    res.status(200).json({
+      message: "SubCategories fetched successfully",
+      success: true,
+      data: subCategories,
+    });
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
+  }
 };
 
 exports.deleteSubCategory = async (req, res) => {
   const { subCategoryId } = req.params;
 
+  if (!subCategoryId) {
+    const error = new Error("subCategoryId is required");
+    error.statusCode = 400;
+    throw error;
+  }
+
   try {
     const response = await SubCategory.findByIdAndDelete(subCategoryId);
-    const category = await Category.findOne({subCategoryId : subCategoryId})
-    await category.removeSubCategoryId(subCategoryId)
-    // console.log('CATEGORY ', category)
+
     if (!response) {
-      return res.status(404).json({
-        message: "subCategory doesn't exist.",
-        success: false,
-        error: "subCategory Not Found!",
-      });
+      const error = new Error("SubCategory not found");
+      error.statusCode = 404;
+      throw error;
     }
+    const category = await Category.findOne({ subCategoryId: subCategoryId });
+    await category.removeSubCategoryId(subCategoryId);
+
     res.status(200).json({
-      message: "delete subCategory",
+      message: "delete subCategory successfully.",
       success: true,
       data: response,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({
-      message: "Internal Server Error",
-      success: false,
-      error: error || "Something Went Wrong!",
-    });
+    if (!error.statusCode) {
+      error.statusCode = 500;
+    }
+    next(error);
   }
 };

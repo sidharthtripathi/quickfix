@@ -18,17 +18,17 @@ app.use("/auth", authRoute);
 app.use("/note", noteRoute);
 app.use(subCategoryRoute);
 
-app.get('/' , (req,res)=>{
-  res.send('welcome')
-})
-
-app.use((error, req, res, next) => {
-  res
-    .status(500)
-    .json({ success: false, message: error.message || "something went wrong" });
+app.get("/", (req, res) => {
+  res.send("welcome");
 });
 
-const PORT =1200;
+app.use((error, req, res, next) => {
+  const statusCode = error.statusCode || 500;
+  const message = error.message || "Internal Server Error.";
+  res.status(statusCode).json({ success: false, message: message });
+});
+
+const PORT = 1200;
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
