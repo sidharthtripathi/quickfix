@@ -66,7 +66,8 @@ const SubCategories = () => {
       </div>
 
       <div className="mt-4">
-        {subCategory && subCategory.map((subCategory) => (
+        {/* If we directly delete a category, it causes an error because we are trying to access the values of the deleted category below. Therefore, I've added a condition with 'category &&' to ensure that if the category no longer exists, it will not attempt to render the content below. */}
+        {(category && subCategory) && subCategory.map((subCategory) => (
           <div
             key={subCategory._id}
             className="flex justify-between my-3 mx-2 rounded-lg px-4  bg-teal-500 hover:bg-teal-400 transition duration-150 shadow">

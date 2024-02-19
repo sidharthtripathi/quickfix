@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Outlet } from "react-router-dom";
-import { addCategoryToStore, addingTheFetchedDataToStore } from "../../store/noteSlice";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { addCategoryToStore, addingTheFetchedDataToStore, deleteCategory } from "../../store/noteSlice";
 import axios from "axios";
 import useFetch from "../../hooks/useFetch";
-import { API } from "../../utils/api";
+import { API, deleteData } from "../../utils/api";
 
 const Categories = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate()
   const categories = useSelector((state) => state.note.categories) || null;
 
   const addCategoryHandler = async () => {
@@ -31,6 +32,24 @@ const Categories = () => {
     }
 
   };
+
+  const deleteCategoryHandler = async (categoryId) => {
+    const confirm = window.confirm("Confirm To Delete :")
+    if (!confirm) return;
+    try {
+      const response = await deleteData(`/note/delete-category/${categoryId}`)
+      if (response.data.success){
+        navigate('/note')
+        return dispatch(deleteCategory(categoryId))
+
+      }
+
+
+      else throw new Error('Delete SubCategory Failed.')
+    } catch (error) {
+      alert(error || "Something went wrong.")
+    }
+  }
   return (
     <div className="flex w-full border-2 ">
 
@@ -47,15 +66,20 @@ const Categories = () => {
         <div className="overflow-y-auto pr-2">
           {categories && categories.map((category) => {
             return (
-              <NavLink
-                to={`/note/${category.categoryName}-${category._id}`}
-                state={{ category }}
-                key={category.categoryId}
-                className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"
-              >
-                {category.categoryName}
-                <button onClick={() => alert("delete")} className="mx-3 text-red-600">D</button>
-              </NavLink>
+              <div
+                key={category._id}
+                className="flex justify-between my-3 mx-2 rounded-lg px-4  bg-teal-500 hover:bg-teal-400 transition duration-150 shadow">
+                <NavLink
+                  to={`/note/${category.categoryName}-${category._id}`}
+                  state={{ category }}
+                  key={category.categoryId}
+                  className="w-[100%] py-2"
+                  // className="block py-2 px-4 my-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-green-50 hover:text-green-600 transition duration-150"
+                >
+                  {category.categoryName}
+                </NavLink>
+                  <button onClick={() => deleteCategoryHandler(category._id)} className="mx-3 text-red-300">D</button>
+              </div>
             )
           })}
         </div>
