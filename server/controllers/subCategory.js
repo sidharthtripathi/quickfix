@@ -50,3 +50,30 @@ exports.getSubCategories = async (req, res) => {
     data: subCategories,
   });
 };
+
+exports.deleteSubCategory = async (req, res) => {
+  const { subCategoryId } = req.params;
+
+  try {
+    const response = await SubCategory.deleteOne({ _id: subCategoryId });
+    if (!response) {
+      return res.status(404).json({
+        message: "category doesn't exist.",
+        success: false,
+        error: "Category Not Found!",
+      });
+    }
+    res.status(200).json({
+      message: "delete category",
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error || "Something Went Wrong!",
+    });
+  }
+};
