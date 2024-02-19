@@ -1,4 +1,6 @@
 const Category = require("../models/category");
+const SubCategory = require("../models/subCategory");
+// const { deleteMany } = require("../models/subCategory");
 exports.getNotes = async (req, res) => {
   const notes = await Category.find();
 
@@ -23,12 +25,16 @@ exports.createCategory = async (req, res) => {
   res.status(201).json({ message: "created", success: true, data: response });
 };
 
-
 exports.deleteCategory = async (req, res) => {
   const { categoryId } = req.params;
 
   try {
     const response = await Category.findByIdAndDelete(categoryId);
+
+    await SubCategory.deleteMany({
+      categoryId: categoryId,
+    });
+
     if (!response) {
       return res.status(404).json({
         message: "category doesn't exist.",

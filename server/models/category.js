@@ -33,11 +33,12 @@ categorySchema.methods.addSubCategoryId = function (subCategoryId) {
   this.subCategoryId.push(subCategoryId);
   return this.save();
 };
+
 categorySchema.methods.removeSubCategoryId = function (subCategoryId) {
-  const subCategoryIds = this.subCategoryId.filter((c) => !c.equals(subCategoryId));
-  this.subCategoryId = subCategoryIds
-  console.log('this', this)
-  console.log('category', subCategoryIds)
+  const subCategoryIds = this.subCategoryId.filter(
+    (c) => !c.equals(subCategoryId)
+  );
+  this.subCategoryId = subCategoryIds;
   return this.save();
 };
 
