@@ -57,6 +57,9 @@ exports.deleteSubCategory = async (req, res) => {
 
   try {
     const response = await SubCategory.findByIdAndDelete(subCategoryId);
+    const category = await Category.findOne({subCategoryId : subCategoryId})
+    await category.removeSubCategoryId(subCategoryId)
+    // console.log('CATEGORY ', category)
     if (!response) {
       return res.status(404).json({
         message: "subCategory doesn't exist.",

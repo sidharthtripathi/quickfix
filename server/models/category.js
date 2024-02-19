@@ -9,7 +9,7 @@
 // ],
 const mongoose = require("mongoose");
 
-const noteSchema = new mongoose.Schema(
+const categorySchema = new mongoose.Schema(
   {
     categoryName: {
       type: String,
@@ -29,10 +29,16 @@ const noteSchema = new mongoose.Schema(
   { minimize: false }
 );
 
-
-noteSchema.methods.addSubCategoryId = function (subCategoryId) {
+categorySchema.methods.addSubCategoryId = function (subCategoryId) {
   this.subCategoryId.push(subCategoryId);
   return this.save();
 };
+categorySchema.methods.removeSubCategoryId = function (subCategoryId) {
+  const subCategoryIds = this.subCategoryId.filter((c) => !c.equals(subCategoryId));
+  this.subCategoryId = subCategoryIds
+  console.log('this', this)
+  console.log('category', subCategoryIds)
+  return this.save();
+};
 
-module.exports = mongoose.model("Category", noteSchema);
+module.exports = mongoose.model("Category", categorySchema);
