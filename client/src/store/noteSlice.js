@@ -22,7 +22,7 @@ const noteSlice = createSlice({
     },
     addSubCategoryToStore: (state, action) => {
       console.log("paylaod ", action.payload);
-      state.subCategories.push(action.payload)
+      state.subCategories.push(action.payload);
     },
     addNote: (state, action) => {
       const { subCategoryId, notes } = action.payload;
@@ -35,6 +35,13 @@ const noteSlice = createSlice({
         state.subCategories[subCategoryIdx].notes = notes;
       }
     },
+    deleteSubCategory: (state, action) => {
+      const subCategoryId = action.payload;
+      const filteredSubCategories = state.subCategories.filter(
+        (subCategory) => subCategory._id !== subCategoryId
+      );
+      state.subCategories = filteredSubCategories;
+    },
   },
 });
 
@@ -44,5 +51,6 @@ export const {
   addSubCategoryToStore,
   addNote,
   addingTheFetchedDataToStore,
+  deleteSubCategory
 } = noteSlice.actions;
 export default noteSlice.reducer;

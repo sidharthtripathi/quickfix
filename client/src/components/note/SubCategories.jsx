@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { API } from "../../utils/api";
-import { addSubCategoryToStore } from "../../store/noteSlice";
+import { API, deleteData } from "../../utils/api";
+import { addSubCategoryToStore, deleteSubCategory } from "../../store/noteSlice";
 
 const SubCategories = () => {
   const params = useParams();
@@ -34,13 +34,25 @@ const SubCategories = () => {
     };
     try {
       const response = await axios.post(API + '/sub', subCategory)
-      console.log('response', response.data.data)
       dispatch(addSubCategoryToStore(response.data.data))
-      // console.log('subCategory', subCategory)
     } catch (e) {
       console.log(e)
     }
   };
+
+  const deleteSubCategoryHandler = async (subCategoryId) => {
+    const confirm = window.confirm("Confirm To Delete :")
+    if (!confirm) return;
+    try {
+      const response = await deleteData(`/delete-subCategory/${subCategoryId}`)
+      if (response.data.success)
+        return dispatch(deleteSubCategory(subCategoryId))
+
+      else throw new Error('Delete SubCategory Failed.')
+    } catch (error) {
+      alert(error || "Something went wrong.")
+    }
+  }
   return (
     <div className="mx-10 my-4">
       <div className="flex justify-between items-center bg-teal-500 p-4 rounded-lg shadow-md">
@@ -55,14 +67,18 @@ const SubCategories = () => {
 
       <div className="mt-4">
         {subCategory && subCategory.map((subCategory) => (
-          <Link
+          <div
             key={subCategory._id}
-            to={`/note/${category.categoryName}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
-            className="flex justify-between my-3 mx-2 rounded-lg px-4 py-2 bg-teal-500 hover:bg-teal-400 transition duration-150 shadow"
-          >
-            <div className="text-white font-medium">{subCategory.subCategoryName}</div>
-            <button onClick={()=> alert("delete")} className="mx-3 text-red-200">D</button>
-          </Link>
+            className="flex justify-between my-3 mx-2 rounded-lg px-4  bg-teal-500 hover:bg-teal-400 transition duration-150 shadow">
+            <Link
+              className="w-[100%] py-2"
+              to={`/note/${category.categoryName}-${categoryId}/${subCategory.subCategoryName}-${subCategory._id}`}
+
+            >
+              <div className="text-white font-medium">{subCategory.subCategoryName}</div>
+            </Link>
+            <button onClick={() => deleteSubCategoryHandler(subCategory._id)} className=" text-red-300">D</button>
+          </div>
         ))}
       </div>
     </div>

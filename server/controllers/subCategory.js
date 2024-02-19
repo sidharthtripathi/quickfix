@@ -1,5 +1,6 @@
 const SubCategory = require("../models/subCategory");
 const Category = require("../models/category");
+const { default: mongoose } = require("mongoose");
 
 exports.createSubCategory = async (req, res) => {
   const { categoryId, subCategory } = req.body;
@@ -55,7 +56,7 @@ exports.deleteSubCategory = async (req, res) => {
   const { subCategoryId } = req.params;
 
   try {
-    const response = await SubCategory.deleteOne({ _id: subCategoryId });
+    const response = await SubCategory.findByIdAndDelete(subCategoryId);
     if (!response) {
       return res.status(404).json({
         message: "category doesn't exist.",
