@@ -11,6 +11,7 @@ const NoteSection = () => {
   useEffect(() => {
     if (!subCategories.data) return;
     const subCategoriesData = subCategories.data?.data.data;
+    console.log('subCategoriesData',subCategoriesData)
     dispatch(addSubcategoriesToStore(subCategoriesData))
 
   }, [subCategories?.isLoading])

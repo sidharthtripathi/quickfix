@@ -20,6 +20,10 @@ const noteSlice = createSlice({
       console.log("paylaod ", action.payload);
       state.subCategories = action.payload;
     },
+    addSubCategoryToStore: (state, action) => {
+      console.log("paylaod ", action.payload);
+      state.subCategories.push(action.payload)
+    },
     addNote: (state, action) => {
       const { subCategoryId, notes } = action.payload;
 
@@ -37,6 +41,7 @@ const noteSlice = createSlice({
 export const {
   addCategoryToStore,
   addSubcategoriesToStore,
+  addSubCategoryToStore,
   addNote,
   addingTheFetchedDataToStore,
 } = noteSlice.actions;
