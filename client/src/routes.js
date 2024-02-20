@@ -6,6 +6,7 @@ import NoteEditorSection from "./components/note/NoteEditorSection";
 import Login from "./components/auth/LoginPage";
 import SubCategories from "./components/note/SubCategories";
 import Dummy_Login from "./components/auth/Dummy_Login";
+import RegisterPage from "./components/auth/RegisterPage";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +22,10 @@ const router = createBrowserRouter([
       },
       { path: "/note", element: <NoteSection /> },
     ],
-    
+
   },
   { path: "/login", element: <Login /> },
-  {path:"/d",element:<Dummy_Login/>}
+  { path: "/register", element: <RegisterPage /> }
 
 ]);
 

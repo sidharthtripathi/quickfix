@@ -1,9 +1,22 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { FaEye,FaEyeSlash } from "react-icons/fa";
+
+
+
+
+
 const Login = () => {
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
+
+  //toggle password
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+
+  }
   const URL="http://localhost:1200/login";
   const handleSubmit = async(values,onSubmitProps) => {
     
@@ -81,12 +94,23 @@ const Login = () => {
               className="  p-3 w-[32rem] h-[4rem] bg-[#000000] rounded-3xl text-[1.25rem] text-normal " value={email} onChange={handleInputChangeEmail}
             ></input>
           </div>
-          <div>
+          <div className="flex"> 
             <input
               placeholder="Password"
               className=" p-3 mt-5 w-[32rem] h-[4rem] bg-[#000000] rounded-3xl text-[20px] text-normal"
-              value={password} onChange={handleInputChangePassword}
+              value={password} type={showPassword?'password':'text'} onChange={handleInputChangePassword}
             ></input>
+           
+             <button className="absolute flex inset-y-50% pl-29rem" type="button" onClick={togglePasswordVisibility}>
+             {showPassword ?  <FaEye className="w-6 h-6" />:<FaEyeSlash />}
+             </button>
+            {
+             
+           
+            }
+           
+
+            
           </div>
 
           <Link href="" className=" text-right text-normal mt-2 hover:text-blue-400 text-[1.3rem] ">
