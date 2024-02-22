@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEye,FaEyeSlash } from "react-icons/fa";
+import Error from "./Error";
+
+/**
+ * 
+ */
 
 
 const RegisterPage=()=>{
@@ -25,7 +30,7 @@ const RegisterPage=()=>{
     return (
 
         <>
-          
+          <Error ></Error>
        <div className="flex flex-col md:flex-row ">
        <div className="md:w-[50%] md:min-w-[500px] h-screen grid place-content-center">
    
@@ -40,6 +45,8 @@ const RegisterPage=()=>{
      <div className="text-[3rem] font-bold text-center">
            Register Your Account
          </div>
+         <hr className="h-px mx-7 my-3 ">
+      </hr>
    
          <div className="text-[1.8rem] font-normal text-center">
            {/*
@@ -105,6 +112,7 @@ const RegisterPage=()=>{
           
            <div className="flex justify-center mt-0 ">
              <button   className="  hover:bg-[#3ebca3ae] w-[19rem] h-[4.8rem] text-center rounded-[2rem] bg-[#28B498] text-white text-[2rem] text-normal">
+              
                Sign Up
              </button>
            </div>
@@ -134,7 +142,10 @@ const RegisterPage=()=>{
    
            <div className="flex justify-center">
              <button className="mt-10 w-[322px] h-[77px] bg-white rounded-[30px] text-center text-[32px] font-semibold text-teal-600 hover:text-white hover:bg-teal-600 transition duration-300">
+               <a href="/login">
                Sign In
+               </a>
+               
              </button>
            </div>
            </div>
