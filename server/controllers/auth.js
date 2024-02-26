@@ -7,6 +7,17 @@ const bcrypt = require("bcryptjs");
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+       
+
+    const user = await User.findOne({email});
+    if(user){
+      res.status(500).json({
+        success: false,
+        message: "User already exist"
+      });
+      
+      return;
+    }
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
@@ -16,6 +27,8 @@ exports.register = async (req, res) => {
       email,
       password: passwordHash,
     });
+
+    
 
     const savedUser = await newUser.save();
     res.status(200).json({

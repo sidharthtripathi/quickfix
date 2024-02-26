@@ -3,16 +3,16 @@ import { ToastContainer,toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-function Error({className,msg}) {
+const Error=({className,msg})=>{
   useEffect(() => {
-    toast.success(msg);
+    toast.error(msg);
   }, [msg]);
 
   return (
    
     <>
     
-    <div className={className}>{msg}</div>
+   
   
           <ToastContainer  />
     </>

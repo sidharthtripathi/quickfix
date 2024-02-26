@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 import Error from "./Error";
+import Success from "./Success";
+import { API_BASE_URL } from '../../config'
 
 /**
  * 
@@ -11,7 +13,21 @@ import Error from "./Error";
 const RegisterPage=()=>{
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
-    const [showPassword, setShowPassword] = useState(false);
+    const [name,setName]= useState("");
+ 
+  const [showPassword, setShowPassword] = useState(false);
+  
+  //for errors
+  const [error,setError] = useState(false);
+  const [errorData,setErrorData] = useState('Something went wrong ');
+  
+  // for success
+  const [success,setSuccess] =useState(false);
+  const [successData,setSuccessData]=useState("");
+
+  const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+   
+
     
   
     //toggle password
@@ -27,10 +43,77 @@ const RegisterPage=()=>{
       // console.log(e.target.value);
       setEmail(e.target.value);
       }
+
+
+      const handleInputChangeName=(e)=>{
+         setName(e.target.value);
+      }
+
+      const handleSubmit=async(e)=>{
+          e.preventDefault();
+          console.log(emailRegex.test(email));
+          if(name.length==0 || password.length==0 || email.length==0){
+            setError(true);
+            setErrorData("Enter your all details ");
+             return ;
+          }
+
+          //password 8 to 16
+          else if(password.length<8 || password>16){
+            setError(true);
+            setErrorData("Password must be of length between 8 to 16");
+            return;
+            
+          }
+         
+          else if(emailRegex.test(email)==false){
+            setError(true);
+            setErrorData("Enter your valid email address");
+            return;
+          }
+
+          const URL = `${API_BASE_URL}/auth/register`;
+
+          try{
+          const registerResponse = await fetch(`${URL}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email,name, password }),
+          });
+          console.log(registerResponse);
+          registerResponse.json().then((response)=>{
+            if(response.success==false){
+            setError(true);
+            setErrorData(response.message);
+            return ;}
+
+            else{
+              setSuccess(true);
+              setSuccessData("User register successfully");
+              setTimeout(()=>{
+                window.location.href = '/login'
+            },2000)
+            }
+          })
+
+        }
+        catch(err){
+          setError(true);
+            setErrorData("Something went wrong !!");
+          console.log(err);
+          
+        }
+
+
+
+
+      }
     return (
 
         <>
-          <Error ></Error>
+          {error && <Error msg = {errorData}/>}
+          {success && <Success msg={successData}/>}
+
        <div className="flex flex-col md:flex-row ">
        <div className="md:w-[50%] md:min-w-[500px] h-screen grid place-content-center">
    
@@ -72,7 +155,7 @@ const RegisterPage=()=>{
    
          <div className="grid place-content-center my-7">
             <div>
-            <input className=" p-3 mt-2 w-[32rem] h-[4rem] bg-[#000000] rounded-3xl text-[20px] text-normal" placeholder="Name">
+            <input className=" p-3 mt-2 w-[32rem] h-[4rem] bg-[#000000] rounded-3xl text-[20px] text-normal" value={name} onChange={handleInputChangeName} placeholder="Name">
              </input>
             </div>
              <div>
@@ -111,7 +194,7 @@ const RegisterPage=()=>{
           
           
            <div className="flex justify-center mt-0 ">
-             <button   className="  hover:bg-[#3ebca3ae] w-[19rem] h-[4.8rem] text-center rounded-[2rem] bg-[#28B498] text-white text-[2rem] text-normal">
+             <button onClick={handleSubmit}   className="  hover:bg-[#3ebca3ae] w-[19rem] h-[4.8rem] text-center rounded-[2rem] bg-[#28B498] text-white text-[2rem] text-normal">
               
                Sign Up
              </button>

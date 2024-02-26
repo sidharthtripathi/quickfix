@@ -18,7 +18,7 @@ const Login = () => {
   const [ password, setPassword ] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
-  const [error,setError] = useState(false);
+  const [error,setError] = useState(true);
 
   const [errorData,setErrorData] = useState('Something went wrong ');
 
