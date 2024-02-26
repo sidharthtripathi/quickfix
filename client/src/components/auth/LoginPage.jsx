@@ -3,6 +3,9 @@ import { useState } from "react";
 import { FaEye,FaEyeSlash } from "react-icons/fa";
 
 import Error from "./Error";
+import Success from "./Success";
+
+import { API_BASE_URL } from '../../config'
 
 /** Some contraints for inputs
  * 1.email : should be email 
@@ -14,25 +17,66 @@ import Error from "./Error";
 
 
 const Login = () => {
+  
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   
-  const [error,setError] = useState(true);
+    // for success
+    const [success,setSuccess] =useState(false);
+    const [successData,setSuccessData]=useState("");
 
-  const [errorData,setErrorData] = useState('Something went wrong ');
+
+  const [error,setError] = useState(false);
+  const [errorData,setErrorData] = useState('Something went wrong');
 
   
+  if (localStorage.getItem('auth-token')) return window.location = '/';
+
 
   //toggle password
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
 
   }
-  const URL="http://localhost:1200/login";
-  const handleSubmit = async(values) => {
-    
-    
+  const URL = `${API_BASE_URL}/auth/login`;
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    if(password.length==0 || email.length==0){
+      setError(true);
+      setErrorData("Enter your all details");
+      return ;
+    }
+
+    const loginResponse = await fetch(`${URL}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    loginResponse.json().then((data)=>{
+      if(data.success==false){
+        setError(true);
+        setErrorData(data.message);
+          return;
+      }else{
+          console.log(data);
+
+          
+          setSuccess(true);
+          setSuccessData("Login successfully ");
+          setTimeout(()=>{
+            window.location.href = '/login';
+            localStorage.setItem('auth-token', data.token);
+        },2000)
+
+        
+          
+
+      }
+    })
+
+
 
     
   }
@@ -49,7 +93,7 @@ const Login = () => {
 
      <>
         {error && <Error msg = {errorData}/>}
-        
+        {success && <Success msg={successData}/>}
     <div className="flex flex-col md:flex-row ">
     <div className="md:w-[50%] md:min-w-[500px] h-screen grid place-content-center">
 
