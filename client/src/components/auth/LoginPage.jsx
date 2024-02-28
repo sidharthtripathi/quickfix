@@ -6,6 +6,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 // import Success from "./Success";
 
 import { API_BASE_URL } from '../../config'
+import AuthRightSection from "../UI/AuthRightSection";
+import Button from "../UI/Button";
 
 /** Some contraints for inputs
  * 1.email : should be email 
@@ -103,22 +105,10 @@ const Login = () => {
           </div>
 
           <div className="text-[1.8rem] font-normal text-center">
-            {/*
-       social media button 
-       * */}
-
             Login using social networks{" "}
           </div>
 
-
-          {/**
-        * 
-        * for icons
-        */}
           <div className="grid  ">
-
-
-
           </div>
 
           <hr className="h-px mx-7 my-3 ">
@@ -143,13 +133,6 @@ const Login = () => {
               <button className="absolute flex inset-y-50% pl-29rem" type="button" onClick={togglePasswordVisibility}>
                 {showPassword ? <FaEye className="w-6 h-6" /> : <FaEyeSlash />}
               </button>
-              {
-
-
-              }
-
-
-
             </div>
 
             <Link href="" className=" text-right text-normal mt-2 hover:text-blue-400 text-[1.3rem] ">
@@ -158,43 +141,11 @@ const Login = () => {
           </div>
 
 
-
-          <div className="flex justify-center mt-0 ">
-            <button onClick={handleSubmit} className="  hover:bg-[#3ebca3ae] w-[19rem] h-[4.8rem] text-center rounded-[2rem] bg-[#28B498] text-white text-[2rem] text-normal">
-              Sign In
-            </button>
-          </div>
-
-
-
+          <Button buttonTitle="Sign In" onClick={handleSubmit} buttonClasses="hover:bg-[#3ebca3ae] bg-[#28B498] text-white" />
         </div>
 
-        {
-          /**
-           * 
-           *Right side
-           */
-        }
+        <AuthRightSection heading="New Here?" content="Sign up and discover a great amount of new opportunities!" buttonTitle="Sign Up" />
 
-
-        <div className="md:w-[50%] h-screen bg-gradient-to-r from-[#3FAAA8F2] to-[#39B792] flex justify-center">
-          <div className="w-[498px] h-screen grid place-content-center">
-            <div className="text-center text-white font-bold text-[4rem]">
-              New Here?
-            </div>
-
-
-            <div className="text-center text-white font-medium text-[1.5rem]">
-              Sign up and discover a great amount of new opportunities!
-            </div>
-
-            <div className="flex justify-center">
-              <button className="mt-10 w-[322px] h-[77px] bg-white rounded-[30px] text-center text-[32px] font-semibold text-teal-600 hover:text-white hover:bg-teal-600 transition duration-300">
-                Sign Up
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
 
     </>
