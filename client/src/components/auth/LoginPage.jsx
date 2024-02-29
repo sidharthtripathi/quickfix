@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -8,6 +8,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { API_BASE_URL } from '../../config'
 import AuthRightSection from "../UI/AuthRightSection";
 import Button from "../UI/Button";
+import { postData } from "../../utils/api";
 
 /** Some contraints for inputs
  * 1.email : should be email 
@@ -24,6 +25,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  const navigate = useNavigate()
   // for success
   const [success, setSuccess] = useState(false);
   const [successData, setSuccessData] = useState("");
@@ -33,7 +35,7 @@ const Login = () => {
   const [errorData, setErrorData] = useState('Something went wrong');
 
 
-  if (localStorage.getItem('auth-token')) return window.location = '/';
+  if (localStorage.getItem('auth-token')) return <Navigate to="/" />
 
 
   //toggle password
@@ -42,46 +44,41 @@ const Login = () => {
 
   }
   const URL = `${API_BASE_URL}/auth/login`;
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password.length == 0 || email.length == 0) {
+    if (password.length === 0 || email.length === 0) {
       setError(true);
-      setErrorData("Enter your all details");
+      setErrorData("Enter all your details");
       return;
     }
-
-    const loginResponse = await fetch(`${URL}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    loginResponse.json().then((data) => {
-      if (data.success == false) {
+  
+    try {
+      const response = await postData('/auth/login', { email, password });
+      console.log("RESPONSE", response);
+  
+      if (response.success === false) {
         setError(true);
-        setErrorData(data.message);
-        return;
+        setErrorData(response.message);
       } else {
-        console.log(data);
-
-
+        console.log(response);
         setSuccess(true);
-        setSuccessData("Login successfully ");
+        setSuccessData("Login successful");
         setTimeout(() => {
-          window.location.href = '/login';
-          localStorage.setItem('auth-token', data.token);
-        }, 2000)
-
-
-
-
+          // window.location.href = '/login';
+          navigate('/')
+          localStorage.setItem('auth-token', response.data.token);
+          localStorage.setItem('userId', response.data.user._id);
+        }, 2000);
       }
-    })
-
-
-
-
+    } catch (error) {
+      console.error("Error:", error);
+      setError(true); 
+      setErrorData("Something went wrong with the request");
+    }
   }
+  
 
   const handleInputChangePassword = (e) => {
     setPassword(e.target.value);

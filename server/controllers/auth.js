@@ -63,6 +63,7 @@ exports.login = async (req, res, next) => {
     if (!isMatch) {
       throwError("Invalid password", 400);
     }
+    // console.log("env",process.env)
     const token = jwt.sign({ user, id: user._id }, process.env.JWT_SECRET);
 
     res.status(200).json({ success: true, token, user });

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ToastMessage from "./ToastMessage";
 import { postData } from "../../utils/api";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import Input from "../UI/Input";
 import AuthRightSection from "../UI/AuthRightSection";
 import Button from "../UI/Button";
@@ -16,6 +16,7 @@ const RegisterPage = () => {
     name: "",
   })
 
+  console.log("locals", localStorage)
 
   //for errors
   const [error, setError] = useState(false);
@@ -25,7 +26,7 @@ const RegisterPage = () => {
   const navigate = useNavigate()
 
 
-  if (localStorage.getItem('auth-token')) return window.location = '/';
+  if (localStorage.getItem('auth-token')) return <Navigate to="/" />
 
 
   const inputChangeHandler = (e) => {
@@ -57,11 +58,12 @@ const RegisterPage = () => {
 
 
       const response = await postData('/auth/register', inputData)
+      console.log('response', response)
 
       if (response.data.success === true) {
         setSuccess(true);
         setToastMessage("User register successfully");
-        navigate('/login')
+        navigate('/')
       }
 
       else {

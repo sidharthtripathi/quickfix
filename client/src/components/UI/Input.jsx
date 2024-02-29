@@ -15,7 +15,7 @@ const Input = ({ value, type, onChange, placeholder, name }) => {
             <input
                 placeholder={placeholder}
                 name={name}
-                className=" p-3 mt-5 w-[32rem] h-[4rem] bg-[#000000] rounded-3xl text-[20px] text-normal"
+                className="p-3 mt-5 w-[32rem] h-[4rem] bg-[#ECF5F3] rounded-3xl text-[20px] text-normal text-black"
                 value={value || ""} type={showPassword ? "text" : type} onChange={onChange}
             ></input>
             {type === 'password' ?
