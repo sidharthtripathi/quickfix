@@ -15,7 +15,7 @@ const AuthRightSection = ({ heading, content, buttonColor, buttonTitle, onButton
 
                 <div className="flex justify-center">
                     <Button
-                        buttonTitle="Sign Up"
+                        buttonTitle={buttonTitle}
                         onClick={onButtonClick}
                         buttonClasses="bg-white text-teal-600 hover:text-white hover:bg-teal-600" />
                 </div>

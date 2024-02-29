@@ -12,7 +12,7 @@ exports.getCategories = async (req, res, next) => {
       data: categories,
     });
   } catch (error) {
-    if (error.statusCode) {
+    if (!error.statusCode) {
       error.statusCode = 500;
     }
     next(error);
@@ -35,7 +35,7 @@ exports.createCategory = async (req, res, next) => {
 
     res.status(201).json({ message: "created", success: true, data: response });
   } catch (error) {
-    if (error.statusCode) {
+    if (!error.statusCode) {
       error.statusCode = 500;
     }
     next(error);
@@ -62,7 +62,7 @@ exports.deleteCategory = async (req, res, next) => {
       data: response,
     });
   } catch (error) {
-    if (error.statusCode) {
+    if (!error.statusCode) {
       error.statusCode = 500;
     }
     next(error);

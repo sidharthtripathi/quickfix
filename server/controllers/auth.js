@@ -8,7 +8,7 @@ const { throwError } = require("../utils/throwError");
 exports.register = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
-    if (!name || !email ||  !password) {
+    if (!name || !email || !password) {
       throwError("name, email and password are required", 400);
     }
 
@@ -39,7 +39,7 @@ exports.register = async (req, res, next) => {
       data: savedUser,
     });
   } catch (error) {
-    if (error.statusCode) {
+    if (!error.statusCode) {
       error.statusCode = 500;
     }
     next(error);
@@ -59,8 +59,9 @@ exports.login = async (req, res, next) => {
       throwError("User not found.", 404);
     }
 
-    const isMatch = bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
+      console.log("Invalid password")
       throwError("Invalid password", 400);
     }
     // console.log("env",process.env)
@@ -68,7 +69,7 @@ exports.login = async (req, res, next) => {
 
     res.status(200).json({ success: true, token, user });
   } catch (error) {
-    if (error.statusCode) {
+    if (!error.statusCode) {
       error.statusCode = 500;
     }
     next(error);

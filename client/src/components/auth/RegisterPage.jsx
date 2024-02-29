@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import ToastMessage from "./ToastMessage";
-import { postData } from "../../utils/api";
 import { Navigate, useNavigate } from "react-router-dom";
-import Input from "../UI/Input";
+
+import ToastMessage from "./ToastMessage";
 import AuthRightSection from "../UI/AuthRightSection";
+import Input from "../UI/Input";
 import Button from "../UI/Button";
+import { postData } from "../../utils/api";
 
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -48,7 +49,6 @@ const RegisterPage = () => {
       else if (inputData.password.length < 8 || inputData.password.length > 16) {
         const error = "Password must be of length between 8 to 16"
         throw error
-
       }
 
       else if (emailRegex.test(inputData.email) === false) {
@@ -56,14 +56,13 @@ const RegisterPage = () => {
         throw error
       }
 
-
       const response = await postData('/auth/register', inputData)
       console.log('response', response)
 
       if (response.data.success === true) {
         setSuccess(true);
         setToastMessage("User register successfully");
-        navigate('/')
+        navigate('/login')
       }
 
       else {
@@ -118,7 +117,7 @@ const RegisterPage = () => {
           <Button buttonTitle="Sign Up" onClick={handleSubmit} buttonClasses="hover:bg-[#3ebca3ae] bg-[#28B498] text-white" />
         </div>
 
-        <AuthRightSection heading="Already There?" content="Sign In and discover a great amount of new opportunities!" buttonTitle="Sign In" buttonColor="" />
+        <AuthRightSection heading="Already There?" content="Sign In and discover a great amount of new opportunities!" buttonTitle="Sign In" onButtonClick={() => navigate('/login')} />
       </div>
 
     </>

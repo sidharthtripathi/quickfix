@@ -10,10 +10,10 @@ export const deleteData = (endpoint) => {
     return error.response;
   }
 };
-export const postData = (endpoint,data) => {
-  console.log("IN POST DATA", data)
+export const postData = async (endpoint, data) => {
+  console.log("IN POST DATA", data);
   try {
-    const response = axios.post(`${API + endpoint}`, data);
+    const response = await axios.post(`${API + endpoint}`, data);
     return response;
   } catch (error) {
     return error.response;
