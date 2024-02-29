@@ -1,13 +1,12 @@
 const SubCategory = require("../models/subCategory");
 const Category = require("../models/category");
+const { throwError } = require("../utils/throwError");
 
 exports.createSubCategory = async (req, res, next) => {
   const { categoryId, subCategory } = req.body;
 
   if (!categoryId || !subCategory) {
-    const error = new Error("CategoryId and subCategory Details are required.");
-    error.statusCode = 400;
-    throw error;
+    throwError("CategoryId and subCategory Details are required.", 400);
   }
 
   try {
@@ -19,9 +18,7 @@ exports.createSubCategory = async (req, res, next) => {
 
     const category = await Category.findOne({ _id: categoryId });
     if (!category) {
-      const error = new Error("Category Doesn't found!.");
-      error.statusCode = 404;
-      throw error;
+      throwError("Category Doesn't found!.", 404);
     }
 
     await category.addSubCategoryId(response._id);
@@ -31,9 +28,8 @@ exports.createSubCategory = async (req, res, next) => {
       data: response,
     });
   } catch (error) {
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
+    if (!error.statusCode) error.statusCode = 500;
+
     next(error);
   }
 };
@@ -43,17 +39,13 @@ exports.addNotes = async (req, res, next) => {
   const notes = req.body.notes;
 
   if (!subCategoryId || !notes) {
-    const error = new Error("subCategoryId and notes are required.");
-    error.statusCode = 400;
-    throw error;
+    throwError("subCategoryId and notes are required.", 400);
   }
   try {
     const subCategory = await SubCategory.findOne({ _id: subCategoryId });
 
     if (!subCategory) {
-      const error = new Error("SubCategory not found");
-      error.statusCode = 404;
-      throw error;
+      throwError("SubCategory not found", 404);
     }
 
     subCategory.notes = notes;
@@ -65,9 +57,8 @@ exports.addNotes = async (req, res, next) => {
       data: response,
     });
   } catch (error) {
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
+    if (!error.statusCode) error.statusCode = 500;
+
     next(error);
   }
 };
@@ -80,30 +71,25 @@ exports.getSubCategories = async (req, res, next) => {
       data: subCategories,
     });
   } catch (error) {
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
+    if (!error.statusCode) error.statusCode = 500;
     next(error);
   }
 };
 
-exports.deleteSubCategory = async (req, res) => {
+exports.deleteSubCategory = async (req, res, next) => {
   const { subCategoryId } = req.params;
 
   if (!subCategoryId) {
-    const error = new Error("subCategoryId is required");
-    error.statusCode = 400;
-    throw error;
+    throwError("subCategoryId is required", 400);
   }
 
   try {
     const response = await SubCategory.findByIdAndDelete(subCategoryId);
 
     if (!response) {
-      const error = new Error("SubCategory not found");
-      error.statusCode = 404;
-      throw error;
+      throwError("SubCategory not found", 404);
     }
+
     const category = await Category.findOne({ subCategoryId: subCategoryId });
     await category.removeSubCategoryId(subCategoryId);
 
@@ -113,9 +99,7 @@ exports.deleteSubCategory = async (req, res) => {
       data: response,
     });
   } catch (error) {
-    if (!error.statusCode) {
-      error.statusCode = 500;
-    }
+    if (!error.statusCode) error.statusCode = 500;
     next(error);
   }
 };
