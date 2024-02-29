@@ -6,7 +6,6 @@ exports.getCategories = async (req, res, next) => {
   try {
     const categories = await Category.find();
     if (!categories) throwError("Categories Doesn't Exist.", 404);
-
     res.status(200).json({
       message: "Categories Fetched Successfully",
       success: true,
