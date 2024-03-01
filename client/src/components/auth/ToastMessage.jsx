@@ -6,7 +6,7 @@ const ToastMessage = ({ error, className, msg }) => {
   useEffect(() => {
     if (error) {
       toast.error(msg);
-      return 
+      return ;
     }
     toast.success(msg);
   }, [msg, error]);

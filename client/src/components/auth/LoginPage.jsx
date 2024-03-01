@@ -9,11 +9,19 @@ import { postData } from "../../utils/api";
 
 const Login = () => {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
+  const [inputData, setInputData] = useState({
+    email: "",
+    password: ""
+  })
+  const inputChangeHandler = ((e) => {
+    const { name, value } = e.target;
+    setInputData(prevData => (console.log(prevData), {
+      ...prevData, [name]: value
+    }))
+  });
   const navigate = useNavigate()
-  // for success
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [toastMessage, setToastMessage] = useState('Something went wrong ');
@@ -25,12 +33,12 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      if (password.length === 0 || email.length === 0) {
+      if (Object.values(inputData).some(input => input.trim() === "")) {
         const error = "all the fields are required"
         throw error
       }
 
-      const response = await postData('/auth/login', { email, password });
+      const response = await postData('/auth/login', inputData);
 
       if (response.status === 404) {
         const error = "user not found"
@@ -58,13 +66,13 @@ const Login = () => {
   }
 
 
-  const handleInputChangePassword = (e) => {
-    setPassword(e.target.value);
-  }
+  // const handleInputChangePassword = (e) => {
+  //   setPassword(e.target.value);
+  // }
 
-  const handleInputChangeEmail = (e) => {
-    setEmail(e.target.value);
-  }
+  // const handleInputChangeEmail = (e) => {
+  //   setEmail(e.target.value);
+  // }
   return (
 
     <>
@@ -93,15 +101,15 @@ const Login = () => {
             <Input
               placeholder="Email"
               name="email"
-              value={email}
-              onChange={handleInputChangeEmail}
+              value={inputData.email}
+              onChange={inputChangeHandler}
             />
 
             <Input
               placeholder="Password"
               name="password"
-              value={password}
-              onChange={handleInputChangePassword}
+              value={inputData.password}
+              onChange={inputChangeHandler}
               type="password"
             />
 

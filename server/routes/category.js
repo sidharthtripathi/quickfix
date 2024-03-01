@@ -1,9 +1,10 @@
 const express = require("express");
+const {isAuth}=require("../middleware/isAuth");
 const {  createCategory, deleteCategory, getCategories } = require("../controllers/category");
 
 const router = express.Router();
 
-router.get("/notes", getCategories);
+router.get("/notes",isAuth,getCategories);
 router.post("/create-category", createCategory);
 router.delete("/delete-category/:categoryId",deleteCategory)
 module.exports = router;
