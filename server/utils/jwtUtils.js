@@ -32,4 +32,4 @@ const verifyJWT = async (token, next) => {
 }
 
 
-module.exports={signJWT,verifyJWT};
+module.exports = { signJWT, verifyJWT };

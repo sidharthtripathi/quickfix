@@ -14,10 +14,10 @@ exports.isAuth = (req, res, next) => {
     req.user = decoded.user;
     next();
   } catch (err) {
-    if(err.statusCode){
-      error.statusCode=500;
+    if (err.statusCode) {
+      error.statusCode = 500;
     }
     next(err);
-    
+
   }
 };

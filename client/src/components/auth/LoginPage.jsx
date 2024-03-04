@@ -57,11 +57,16 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+
       setError(true);
       if (error.response?.data.message === "Invalid password") {
         return setToastMessage(error.response.data.message);
       }
       setToastMessage(error);
+      setTimeout(() => {
+        setError(false);
+      },4000);
+      
     }
   }
 
@@ -91,6 +96,7 @@ const Login = () => {
           </div>
 
           <div className="grid  ">
+
           </div>
 
           <hr className="h-px mx-7 my-3 ">

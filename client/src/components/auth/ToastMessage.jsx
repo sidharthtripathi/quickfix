@@ -5,10 +5,25 @@ import 'react-toastify/dist/ReactToastify.css';
 const ToastMessage = ({ error, className, msg }) => {
   useEffect(() => {
     if (error) {
-      toast.error(msg);
-      return ;
+      toast.error(msg,{
+        autoClose: 3000,
+        position: 'top-right',
+        hideProgressBar: false,
+        closeButton:false,
+        closeOnClick: false,
+        pauseOnHover: false,
+        draggable: false,
+        
+      });
+      return;
     }
-    toast.success(msg);
+    toast.success(msg,{ autoClose: 3000,
+      position: 'top-right',
+      hideProgressBar: false,
+      closeButton:false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,});
   }, [msg, error]);
 
   return (
