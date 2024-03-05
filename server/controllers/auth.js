@@ -94,7 +94,7 @@ exports.forgetPassword = async (req, res, next) => {
       throwError("User not exist", 404);
     }
 
-    const token = jwt.sign({ _id: user._id }, process.env.RESET_PASSWORD_KEY, {
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "15m",
     });
 
@@ -140,7 +140,9 @@ exports.forgetPassword = async (req, res, next) => {
 exports.updatePassword = async (req, res, next) => {
   try {
     const token = req.params.token;
+    console.log(token)
     const { password } = req.body;
+    console.log(password)
     if (!token || !password) throwError("token and password are required", 400);
 
     if (token) {

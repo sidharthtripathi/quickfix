@@ -10,6 +10,8 @@ const signJWT = async (payload, expiresIn = '15min') => {
 
 const verifyJWT = async (token, next) => {
     try {
+        console.log(token)
+        console.log(secretKey)
         const decoded = await jwt.verify(token, secretKey);
         console.log(decoded)
         return decoded;
