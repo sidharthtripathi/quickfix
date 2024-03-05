@@ -48,7 +48,7 @@ const ForgetPassword = () => {
                 throw error;            
               }
 
-              const response = await putData(`/auth/update-password/${token}`, inputData.password,{token});
+              const response = await putData(`/auth/update-password/${token}`, {password: inputData.password});
               console.log(response);
 
               if(response.status==500){
